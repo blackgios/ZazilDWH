@@ -1,4 +1,15 @@
+# Bytecode de java - los generamos en cada maquina en la que se instale el software
 *.class
+
+# Carpeta de Netbeans
+nbproject/
+
+# Ficheros generados no necesarios para el proyecto
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
 
 # Package Files #
 *.jar
