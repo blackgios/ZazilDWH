@@ -8,21 +8,34 @@ public class EstadoCuentaBean extends BaseBean{
     private String rfcEmpresa;
     private int bancoSISCAM;
     private String cuenta;
-    private String perido;
+    private String periodo;
     private long saldoInicial;
     private long saldoFinal;
     private long entradas;
     private long salidas;
-
-    public EstadoCuentaBean(String rfcEmpresa, int bancoSISCAM, String cuenta, String perido, long saldoInicial, long saldoFinal, long entradas, long salidas) {
-        this.rfcEmpresa = rfcEmpresa;
-        this.bancoSISCAM = bancoSISCAM;
-        this.cuenta = cuenta;
-        this.perido = perido;
-        this.saldoInicial = saldoInicial;
-        this.saldoFinal = saldoFinal;
-        this.entradas = entradas;
-        this.salidas = salidas;
+    /**
+     * Constructor de la clase Parametros de entrada:
+     * @param rfcEmpresa
+     * @param bancoSISCAM
+     * @param cuenta
+     * @param periodo
+     * @param saldoInicial
+     * @param saldoFinal
+     * @param entradas
+     * @param salidas 
+     * 
+     * Este constructor evita que se obtenga un objeto de esta 
+     * clase sin sus valores debidamente inicializados.
+     */
+    public EstadoCuentaBean(String rfcEmpresa, int bancoSISCAM, String cuenta, String periodo, long saldoInicial, long saldoFinal, long entradas, long salidas) {
+        this.setRfcEmpresa(rfcEmpresa);
+        this.setBancoSISCAM(bancoSISCAM);
+        this.setCuenta(cuenta);
+        this.setPerido(periodo);
+        this.setSaldoInicial(saldoInicial);
+        this.setSaldoFinal(saldoFinal);
+        this.setEntradas(entradas);
+        this.setSalidas(salidas);
     }
     
 
@@ -38,7 +51,7 @@ public class EstadoCuentaBean extends BaseBean{
         return bancoSISCAM;
     }
 
-    public void setBancoSISCAM(int bancoSISCAM) {
+    private void setBancoSISCAM(int bancoSISCAM) {
         this.bancoSISCAM = bancoSISCAM;
     }
 
@@ -46,23 +59,23 @@ public class EstadoCuentaBean extends BaseBean{
         return cuenta;
     }
 
-    public void setCuenta(String cuenta) {
+    private void setCuenta(String cuenta) {
         this.cuenta = cuenta;
     }
 
     public String getPerido() {
-        return perido;
+        return periodo;
     }
 
-    public void setPerido(String perido) {
-        this.perido = perido;
+    private void setPerido(String periodo) {
+        this.periodo = periodo;
     }
 
     public long getSaldoInicial() {
         return saldoInicial;
     }
 
-    public void setSaldoInicial(long saldoInicial) {
+    private void setSaldoInicial(long saldoInicial) {
         this.saldoInicial = saldoInicial;
     }
 
@@ -70,7 +83,7 @@ public class EstadoCuentaBean extends BaseBean{
         return saldoFinal;
     }
 
-    public void setSaldoFinal(long saldoFinal) {
+    private void setSaldoFinal(long saldoFinal) {
         this.saldoFinal = saldoFinal;
     }
 
@@ -78,7 +91,7 @@ public class EstadoCuentaBean extends BaseBean{
         return entradas;
     }
 
-    public void setEntradas(long entradas) {
+    private void setEntradas(long entradas) {
         this.entradas = entradas;
     }
 
@@ -86,7 +99,7 @@ public class EstadoCuentaBean extends BaseBean{
         return salidas;
     }
 
-    public void setSalidas(long salidas) {
+    private void setSalidas(long salidas) {
         this.salidas = salidas;
     }
 }
