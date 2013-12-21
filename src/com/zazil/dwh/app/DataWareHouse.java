@@ -5,7 +5,6 @@
 package com.zazil.dwh.app;
 
 import com.zazil.dwh.app.bussiness.EmpresaService;
-import com.zazil.dwh.app.dao.EmpresaDAO;
 import com.zazil.dwh.app.gui.MenuPrincipalVentana;
 import com.zazil.dwh.app.model.EmpresaBean;
 import java.util.ArrayList;
