@@ -14,8 +14,9 @@ public enum Mes {
     private Mes(int numeroMes) {
         this.numeroMes = numeroMes;
     }
-    
-    public int numeroMes(){
-        return this.numeroMes;
+
+    public int getNumeroMes() {
+        return numeroMes;
     }
+    
 }

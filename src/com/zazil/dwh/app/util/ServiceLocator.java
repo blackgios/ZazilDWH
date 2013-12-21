@@ -1,6 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Hector Rodriguez
  */
 package com.zazil.dwh.app.util;
 
@@ -10,10 +10,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- *
- * @author Hector Rodriguez
- */
 public class ServiceLocator {
     private static ServiceLocator instance = new ServiceLocator();
     //Inicializador de instancia
