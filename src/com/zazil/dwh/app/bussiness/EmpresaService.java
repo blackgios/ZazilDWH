@@ -11,7 +11,6 @@ import com.zazil.dwh.app.util.ServiceLocator;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class EmpresaService {
     
@@ -32,20 +31,33 @@ public class EmpresaService {
         
         return listaEmpresas;
     }
-    
-    public static String[] obtenerNombresEmpresas(ArrayList<EmpresaBean> listaEmpresas){
-        System.out.println("Numero de Empresas: " + listaEmpresas.size());
-//        System.out.println("Primer Empresa: " + listaEmpresas.get(0).getNombreEmpresa());
-//        System.out.println("Ultima Empresa: " + listaEmpresas.get(listaEmpresas.size() - 1).getNombreEmpresa());
-        String[] listaNombres = new String[listaEmpresas.size() - 1];
-        System.out.println("Tamaño del array: " + listaNombres.length);
-            //listaEmpresas.toArray(listaNombres);
-            for (int i = 0; i < listaEmpresas.size() - 1; i++) {
-                listaNombres[i] = listaEmpresas.get(i).getNombreEmpresa();
-                System.out.println("Empresa "+ i +": " + listaNombres[i]);
+
+    public EmpresaBean obtenerEmpresa(String nombreEmpresa){
+        EmpresaBean empresaEncontrada = null;
+        ArrayList<EmpresaBean> listaEmpresas = EmpresaService.obtenerEmpresas();
+        for (EmpresaBean empresaBean : listaEmpresas) {
+            if(empresaBean.getNombreEmpresa().equals(nombreEmpresa)){ 
+                empresaEncontrada = empresaBean;
             }
-            
-        return listaNombres;
+        }
+        return empresaEncontrada;
     }
     
+    public ArrayList obtenerNombresEmpresas(){
+        ArrayList<String> listaNombres = new ArrayList<>();
+        ArrayList<EmpresaBean> listaEmpresas = new ArrayList<>();
+        
+        try(Connection cnx = ServiceLocator.getInstance().getConnection()){
+            EmpresaDAO dao = new EmpresaDAO(cnx);
+            listaEmpresas = dao.obtenerEmpresas();
+            
+        }catch(AppException | SQLException ex){
+            System.out.println("Excepcion: " + ex.getMessage());
+        }
+        
+        for (EmpresaBean empresaBean : listaEmpresas) {
+            listaNombres.add(empresaBean.getNombreEmpresa());
+        }
+        return listaNombres;
+    }
 }

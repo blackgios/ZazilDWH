@@ -1,5 +1,6 @@
 package com.zazil.dwh.app.gui.bancos;
 
+import com.zazil.dwh.app.model.EmpresaBean;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -227,8 +228,11 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
 
     private void jbtEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEmpresasActionPerformed
         // TODO add your handling code here:
+        //EmpresaBean empresaSeleccionada = JOptionPane.showInputDialog(rootPane, evt, null, WIDTH, null, selectionValues, empresaSeleccionada);
+        JOptionPane.showMessageDialog(this, "alert", "alert", JOptionPane.QUESTION_MESSAGE);
         EmpresasVentana empresas = new EmpresasVentana(this,true);
         empresas.setVisible(true);
+        
     }//GEN-LAST:event_jbtEmpresasActionPerformed
 
     private void jbtSaldosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSaldosActionPerformed

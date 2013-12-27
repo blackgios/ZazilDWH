@@ -9,10 +9,10 @@ public class EstadoCuentaBean extends BaseBean{
     private int bancoSISCAM;
     private String cuenta;
     private String periodo;
-    private long saldoInicial;
-    private long saldoFinal;
-    private long entradas;
-    private long salidas;
+    private double saldoInicial;
+    private double saldoFinal;
+    private double entradas;
+    private double salidas;
     /**
      * Constructor de la clase Parametros de entrada:
      * @param rfcEmpresa
@@ -31,7 +31,7 @@ public class EstadoCuentaBean extends BaseBean{
         this.setRfcEmpresa(rfcEmpresa);
         this.setBancoSISCAM(bancoSISCAM);
         this.setCuenta(cuenta);
-        this.setPerido(periodo);
+        this.setPeriodo(periodo);
         this.setSaldoInicial(saldoInicial);
         this.setSaldoFinal(saldoFinal);
         this.setEntradas(entradas);
@@ -63,15 +63,15 @@ public class EstadoCuentaBean extends BaseBean{
         this.cuenta = cuenta;
     }
 
-    public String getPerido() {
+    public String getPeriodo() {
         return periodo;
     }
 
-    private void setPerido(String periodo) {
+    private void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
 
-    public long getSaldoInicial() {
+    public double getSaldoInicial() {
         return saldoInicial;
     }
 
@@ -79,7 +79,7 @@ public class EstadoCuentaBean extends BaseBean{
         this.saldoInicial = saldoInicial;
     }
 
-    public long getSaldoFinal() {
+    public double getSaldoFinal() {
         return saldoFinal;
     }
 
@@ -87,7 +87,7 @@ public class EstadoCuentaBean extends BaseBean{
         this.saldoFinal = saldoFinal;
     }
 
-    public long getEntradas() {
+    public double getEntradas() {
         return entradas;
     }
 
@@ -95,7 +95,7 @@ public class EstadoCuentaBean extends BaseBean{
         this.entradas = entradas;
     }
 
-    public long getSalidas() {
+    public double getSalidas() {
         return salidas;
     }
 

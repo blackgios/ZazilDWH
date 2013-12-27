@@ -28,7 +28,7 @@ public class EstadoCuentaDAO extends BaseDAO{
      * @param rfc
      * @return 
      */
-    public ArrayList obtenerEstadoCuentaRFC(String rfc){
+    public ArrayList obtenerEstadosCuentaRFC(String rfc){
         //1.- Creamos el query para la base de datos con el parametro a usar
         StringBuilder query = new StringBuilder("select * from EstadoCuenta where rfcEmpresa = '");
         query.append(rfc).append("'");
@@ -95,7 +95,7 @@ public class EstadoCuentaDAO extends BaseDAO{
         return listaEstadosCuenta;
     }
 
-    public ArrayList obtenerEstadoCuenta(String rfc, String periodoInicial, String periodoFinal){
+    public ArrayList obtenerEstadosCuenta(String rfc, String periodoInicial, String periodoFinal){
         //En el metodo rfc es un String de 12 caracteres y los periodos son String de 8 caracteres
         StringBuilder query = new StringBuilder("select * from EstadoCuenta where rfcEmpresa = '");
         query.append(rfc).append("' and periodo between '").append(periodoInicial).append("' and '");

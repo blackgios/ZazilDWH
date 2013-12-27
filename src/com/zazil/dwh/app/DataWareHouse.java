@@ -1,6 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Hector Rodriguez
  */
 package com.zazil.dwh.app;
 
@@ -9,10 +9,6 @@ import com.zazil.dwh.app.gui.MenuPrincipalVentana;
 import com.zazil.dwh.app.model.EmpresaBean;
 import java.util.ArrayList;
 
-/**
- *
- * @author Hector Rodriguez
- */
 public class DataWareHouse {
 public static final ArrayList<EmpresaBean> listaEmpresas = EmpresaService.obtenerEmpresas();
 
@@ -27,11 +23,4 @@ public static final ArrayList<EmpresaBean> listaEmpresas = EmpresaService.obtene
         //System.out.println("Clase: " + App.toString());
     }
     
-    /**
-     * Metodo que inicia los componentes de 
-     */
-    private void iniciarComponentes(){
-        
-        
-    }
 }

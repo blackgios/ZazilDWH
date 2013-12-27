@@ -35,13 +35,13 @@ public class TestEstadoCuenta {
         */
         
         //Hacemos una llamada a la funcion con valores validos
-        listaEstadosCuenta = dao.obtenerEstadoCuenta("GPV120928NB5", "20131010", "20131020");
+        listaEstadosCuenta = dao.obtenerEstadosCuenta("GPV120928NB5", "20131010", "20131020");
         
         for (int i = 0; i < listaEstadosCuenta.size(); i++) {
             System.out.println("rfcEmpresa: " + listaEstadosCuenta.get(i).getRfcEmpresa());
             System.out.println("bancoSISCAM: " + listaEstadosCuenta.get(i).getBancoSISCAM());
             System.out.println("cuenta: " + listaEstadosCuenta.get(i).getCuenta());
-            System.out.println("perido: " + listaEstadosCuenta.get(i).getPerido());
+            System.out.println("perido: " + listaEstadosCuenta.get(i).getPeriodo());
             System.out.println("saldo inicial: " + listaEstadosCuenta.get(i).getSaldoInicial());
             System.out.println("saldo final: " + listaEstadosCuenta.get(i).getSaldoFinal());
             System.out.println("entradas: " + listaEstadosCuenta.get(i).getEntradas());

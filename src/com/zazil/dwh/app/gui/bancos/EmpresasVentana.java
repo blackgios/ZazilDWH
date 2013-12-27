@@ -28,21 +28,22 @@ public class EmpresasVentana extends JDialog {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        /**
-        jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        jcbEmpresas = new javax.swing.JComboBox();
+        jbtAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Selección RFC Empresas");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selección de Empresa", 0, 0, new java.awt.Font("Arial", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selección de Empresa", 0, 0, null, new java.awt.Color(51, 153, 0)));
 
         jLabel1.setText("Empresa:");
 
-        */
-        jComboBox1 = new javax.swing.JComboBox<>(EmpresaService.obtenerNombresEmpresas(listaEmpresas));
-
-        jButton1.setText("Aceptar");
+        jbtAceptar.setText("Aceptar");
+        jbtAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -54,10 +55,10 @@ public class EmpresasVentana extends JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, 0, 298, Short.MAX_VALUE))
+                        .addComponent(jcbEmpresas, 0, 298, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(jbtAceptar)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -66,11 +67,18 @@ public class EmpresasVentana extends JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(jbtAceptar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        EmpresaService servicio = new EmpresaService();
+        ArrayList<String> listaNombres = servicio.obtenerNombresEmpresas();
+
+        for (String string : listaNombres) {
+            jcbEmpresas.addItem(string);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,17 +94,22 @@ public class EmpresasVentana extends JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAceptarActionPerformed
+        // TODO add your handling code here:
+        jcbEmpresas.getSelectedItem();
+    }//GEN-LAST:event_jbtAceptarActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton jbtAceptar;
+    private javax.swing.JComboBox jcbEmpresas;
     // End of variables declaration//GEN-END:variables
 }
