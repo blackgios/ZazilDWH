@@ -10,8 +10,8 @@ public class Rango {
     private int rangoFinal;
 
     public Rango(int rangoInicial, int rangoFinal) {
-        this.setRangoInicial(rangoInicial);
-        this.setRangoFinal(rangoFinal);
+        this.rangoInicial = rangoInicial;
+        this.rangoFinal = rangoFinal;
     }
     
     public int getRangoInicial() {
