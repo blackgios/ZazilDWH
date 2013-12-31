@@ -1,6 +1,6 @@
 # Bytecode de java - los generamos en cada maquina en la que se instale el software
 *.class
-
+AppDWH.properties
 # Carpeta de Netbeans
 nbproject/
 
