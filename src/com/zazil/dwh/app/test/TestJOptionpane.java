@@ -1,6 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Hector Rodriguez
  */
 package com.zazil.dwh.app.test;
 
@@ -11,10 +11,6 @@ import com.zazil.dwh.app.model.EstadoCuentaBean;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Hector Rodriguez
- */
 public class TestJOptionpane {
     public static void main(String[] args) {
         //probaremos la integracion entre las clases ya creadas y el uso de JOptionpane

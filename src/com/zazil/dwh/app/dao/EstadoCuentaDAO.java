@@ -68,6 +68,8 @@ public class EstadoCuentaDAO extends BaseDAO{
      * @param periodo
      * @return 
      */
+    //Obtener estado cuenta version 1 es para obtener el estado de cuenta de un dia especifico
+    //Obtener estado cuenta version 2 es para calcular el estado de cuenta de ese dia especifico
     public ArrayList obtenerEstadoCuenta(String rfc, String periodo){
         //En el metodo rfc es un String de 12 caracteres y periodo es un String de 8 caracteres
         StringBuilder query = new StringBuilder("select * from EstadoCuenta where rfcEmpresa = '");
