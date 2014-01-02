@@ -15,7 +15,7 @@ public static final ArrayList<EmpresaBean> listaEmpresas = EmpresaService.obtene
     public DataWareHouse() {
         MenuPrincipalVentana interfazGrafica = new MenuPrincipalVentana();
         interfazGrafica.setVisible(true);
-        
+     
     }
     
     public static void main(String[] args) {
