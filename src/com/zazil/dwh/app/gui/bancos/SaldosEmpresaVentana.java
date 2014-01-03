@@ -229,7 +229,7 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
     private void jbtEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEmpresasActionPerformed
         // TODO add your handling code here:
         //EmpresaBean empresaSeleccionada = JOptionPane.showInputDialog(rootPane, evt, null, WIDTH, null, selectionValues, empresaSeleccionada);
-        JOptionPane.showMessageDialog(this, "alert", "alert", JOptionPane.QUESTION_MESSAGE);
+        //JOptionPane.showMessageDialog(this, "alert", "alert", JOptionPane.QUESTION_MESSAGE);
         EmpresasVentana empresas = new EmpresasVentana(this,true);
         empresas.setVisible(true);
         

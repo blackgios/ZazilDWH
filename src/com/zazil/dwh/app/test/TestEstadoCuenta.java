@@ -5,9 +5,12 @@
  */
 package com.zazil.dwh.app.test;
 
+import com.zazil.dwh.app.bussiness.EmpresaService;
+import com.zazil.dwh.app.bussiness.EstadoCuentaService;
 import com.zazil.dwh.app.dao.EstadoCuentaDAO;
 import com.zazil.dwh.app.model.EstadoCuentaBean;
 import com.zazil.dwh.app.util.AppException;
+import com.zazil.dwh.app.util.Rango;
 import com.zazil.dwh.app.util.ServiceLocator;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -19,8 +22,12 @@ public class TestEstadoCuenta {
         ArrayList<EstadoCuentaBean> listaEstadosCuenta;
         //Creamos el dao para obtener datos desde la Base de Datos
         EstadoCuentaDAO dao = new EstadoCuentaDAO();
+        Rango rango;
         //Usaremos un RFC de la base de datos: GPV120928NB5
-        //listaEstadosCuenta = dao.obtenerEstadoCuentaRFC("GPV120928NB5");
+        listaEstadosCuenta = dao.obtenerEstadosCuentaRFC("GPV120928NB5");
+        EstadoCuentaService servicio = new EstadoCuentaService();
+        rango = servicio.detectarRangos(listaEstadosCuenta);
+        System.out.println("rangos: " + rango);
         
         /*
          * El dao no tiene metodos para saber si los parametros cumplen 
@@ -35,19 +42,19 @@ public class TestEstadoCuenta {
         */
         
         //Hacemos una llamada a la funcion con valores validos
-        listaEstadosCuenta = dao.obtenerEstadosCuenta("GPV120928NB5", "20131010", "20131020");
-        
-        for (int i = 0; i < listaEstadosCuenta.size(); i++) {
-            System.out.println("rfcEmpresa: " + listaEstadosCuenta.get(i).getRfcEmpresa());
-            System.out.println("bancoSISCAM: " + listaEstadosCuenta.get(i).getBancoSISCAM());
-            System.out.println("cuenta: " + listaEstadosCuenta.get(i).getCuenta());
-            System.out.println("perido: " + listaEstadosCuenta.get(i).getPeriodo());
-            System.out.println("saldo inicial: " + listaEstadosCuenta.get(i).getSaldoInicial());
-            System.out.println("saldo final: " + listaEstadosCuenta.get(i).getSaldoFinal());
-            System.out.println("entradas: " + listaEstadosCuenta.get(i).getEntradas());
-            System.out.println("salidas: " + listaEstadosCuenta.get(i).getSalidas());
-            System.out.println("");
-        }
+//        listaEstadosCuenta = dao.obtenerEstadosCuenta("GPV120928NB5", "20131010", "20131020");
+//        
+//        for (int i = 0; i < listaEstadosCuenta.size(); i++) {
+//            System.out.println("rfcEmpresa: " + listaEstadosCuenta.get(i).getRfcEmpresa());
+//            System.out.println("bancoSISCAM: " + listaEstadosCuenta.get(i).getBancoSISCAM());
+//            System.out.println("cuenta: " + listaEstadosCuenta.get(i).getCuenta());
+//            System.out.println("periodo: " + listaEstadosCuenta.get(i).getPeriodo());
+//            System.out.println("saldo inicial: " + listaEstadosCuenta.get(i).getSaldoInicial());
+//            System.out.println("saldo final: " + listaEstadosCuenta.get(i).getSaldoFinal());
+//            System.out.println("entradas: " + listaEstadosCuenta.get(i).getEntradas());
+//            System.out.println("salidas: " + listaEstadosCuenta.get(i).getSalidas());
+//            System.out.println("");
+//        }
         
     }
 }
