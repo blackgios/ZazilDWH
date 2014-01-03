@@ -1,17 +1,18 @@
-package com.zazil.dwh.app.gui;
-
-import com.zazil.dwh.app.gui.bancos.SaldosEmpresaVentana;
-
 /**
  *
  * @author Hector Rodriguez
  */
+package com.zazil.dwh.app.gui;
+
+import com.zazil.dwh.app.gui.bancos.SaldosEmpresaVentana;
+
 public class MenuPrincipalVentana extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuPrincipalVentana
      */
     public MenuPrincipalVentana() {
+        //this.setLocationRelativeTo(null);
         initComponents();
     }
 

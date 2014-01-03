@@ -20,15 +20,19 @@ public class TestEstadoCuenta {
     public static void main(String[] args) throws AppException {
         //Creamos una lista donde guardaremos los resultados de la base de datos
         ArrayList<EstadoCuentaBean> listaEstadosCuenta;
+        ArrayList<EstadoCuentaBean> listaEstadosCuenta2;
         //Creamos el dao para obtener datos desde la Base de Datos
         EstadoCuentaDAO dao = new EstadoCuentaDAO();
         Rango rango;
         //Usaremos un RFC de la base de datos: GPV120928NB5
         listaEstadosCuenta = dao.obtenerEstadosCuentaRFC("GPV120928NB5");
         EstadoCuentaService servicio = new EstadoCuentaService();
-        rango = servicio.detectarRangos(listaEstadosCuenta);
-        System.out.println("rangos: " + rango);
-        
+        rango = servicio.obtenerRangos(listaEstadosCuenta);//Obtiene todos los registros
+        listaEstadosCuenta2 = servicio.obtenerEstadosCuenta("GPV120928NB5",rango);
+        System.out.println("Lista2: " + listaEstadosCuenta2.size());
+        for (EstadoCuentaBean estadoCuentaBean : listaEstadosCuenta2) {
+            System.out.println("Cuenta: " + estadoCuentaBean.getCuenta() + " Periodo: " + estadoCuentaBean.getPeriodo() + " SaldoF: " + estadoCuentaBean.getSaldoFinal());
+        }
         /*
          * El dao no tiene metodos para saber si los parametros cumplen 
          * con la norma especificada por lo que podemos llamar al dao

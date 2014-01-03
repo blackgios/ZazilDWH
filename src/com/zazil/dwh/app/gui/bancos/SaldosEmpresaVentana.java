@@ -1,16 +1,19 @@
-package com.zazil.dwh.app.gui.bancos;
-
-import com.zazil.dwh.app.model.EmpresaBean;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author Hector Rodriguez
  */
+package com.zazil.dwh.app.gui.bancos;
+
+import com.zazil.dwh.app.bussiness.EmpresaService;
+import com.zazil.dwh.app.bussiness.EstadoCuentaService;
+import com.zazil.dwh.app.model.EmpresaBean;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class SaldosEmpresaVentana extends javax.swing.JDialog {
     private JFrame padre;
-
+    private EmpresaService serviciosEmpresa = new EmpresaService();
+    private EstadoCuentaService serviciosCuenta = new EstadoCuentaService();
     public SaldosEmpresaVentana(JFrame owner, boolean modal) {
         super(owner, modal);
         this.padre = owner;
@@ -20,9 +23,9 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
      * Creates new form SaldosEmpresaVentana
      */
     
-    public SaldosEmpresaVentana() {
-        //throw UnsupportedOperationException ex;
-    }
+//    public SaldosEmpresaVentana() {
+//        //throw UnsupportedOperationException ex;
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,18 +41,21 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         jtfEmpresaRFC = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jbtEmpresas = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        jtfNombreEmpresa = new javax.swing.JTextField();
         jbtHistorial = new javax.swing.JButton();
         jbtSaldos = new javax.swing.JButton();
         jbtConsultarEmpresa = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
-        jComboBox3 = new javax.swing.JComboBox();
-        jComboBox4 = new javax.swing.JComboBox();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jlbSeleccionAño = new javax.swing.JLabel();
+        jcbSeleccionAñoIni = new javax.swing.JComboBox();
+        jcbSeleccionMesIni = new javax.swing.JComboBox();
+        jcbSeleccionInicio = new javax.swing.JComboBox();
+        jcbSeleccionFin = new javax.swing.JComboBox();
+        jlbSeleccionMes = new javax.swing.JLabel();
+        jlbSeleccionInicio = new javax.swing.JLabel();
+        jlbSeleccionFin = new javax.swing.JLabel();
+        jlbSeleccionDia = new javax.swing.JLabel();
+        jcbSeleccionAñoFin = new javax.swing.JComboBox();
+        jcbSeleccionMesFin = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta de Saldos");
@@ -80,7 +86,7 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
             }
         });
 
-        jTextField2.setEditable(false);
+        jtfNombreEmpresa.setEditable(false);
 
         jbtHistorial.setText("Ver Historial");
         jbtHistorial.addActionListener(new java.awt.event.ActionListener() {
@@ -103,21 +109,32 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Año:");
+        jlbSeleccionAño.setText("Año:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionAñoIni.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionMesIni.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionInicio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionFin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel5.setText("Mes:");
+        jlbSeleccionMes.setText("Mes:");
 
-        jLabel6.setText("Inicio:");
+        jlbSeleccionInicio.setText("Inicio:");
 
-        jLabel7.setText("Fin:");
+        jlbSeleccionFin.setText("Fin:");
+
+        jlbSeleccionDia.setText("Dia:");
+
+        jcbSeleccionAñoFin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionAñoFin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSeleccionAñoFinActionPerformed(evt);
+            }
+        });
+
+        jcbSeleccionMesFin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,42 +143,54 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel2))
+                            .addComponent(jlbSeleccionInicio)
+                            .addComponent(jlbSeleccionFin))
                         .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtfEmpresaRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jlbSeleccionDia)
+                                        .addGap(51, 51, 51))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jtfEmpresaRFC)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                                 .addComponent(jbtEmpresas))
-                            .addComponent(jTextField2)))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jbtConsultarEmpresa))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jbtHistorial)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbtSaldos))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jcbSeleccionAñoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jcbSeleccionMesFin, 0, 132, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jcbSeleccionFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jcbSeleccionAñoIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jlbSeleccionAño))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jlbSeleccionMes)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jcbSeleccionMesIni, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jcbSeleccionInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(14, 14, 14)
+                                .addComponent(jbtConsultarEmpresa))
+                            .addComponent(jtfNombreEmpresa)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jbtHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtSaldos, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,22 +203,28 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jtfNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                    .addComponent(jlbSeleccionAño)
+                    .addComponent(jlbSeleccionMes)
+                    .addComponent(jlbSeleccionDia))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbSeleccionAñoIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbSeleccionMesIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbSeleccionInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbSeleccionInicio)
                     .addComponent(jbtConsultarEmpresa))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbSeleccionFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jcbSeleccionMesFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcbSeleccionAñoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlbSeleccionFin)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtSaldos)
                     .addComponent(jbtHistorial))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -201,8 +236,8 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,12 +262,23 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void jbtEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEmpresasActionPerformed
-        // TODO add your handling code here:
-        //EmpresaBean empresaSeleccionada = JOptionPane.showInputDialog(rootPane, evt, null, WIDTH, null, selectionValues, empresaSeleccionada);
-        //JOptionPane.showMessageDialog(this, "alert", "alert", JOptionPane.QUESTION_MESSAGE);
-        EmpresasVentana empresas = new EmpresasVentana(this,true);
-        empresas.setVisible(true);
-        
+        // TODO En proceso - Hector Giovanni Rodriguez Ramos 02/01/2014
+        //Hay que obtener un String de la llamada a la ventana 
+        Object obj = JOptionPane.showInputDialog(null, "Valores", "Titulo", JOptionPane.QUESTION_MESSAGE, null, this.serviciosEmpresa.obtenerNombresEmpresas().toArray(), 1);
+        //System.out.println("Empresa: " + obj.toString());
+        if(obj != null){
+            EmpresaBean bean = serviciosEmpresa.obtenerEmpresa(obj.toString());
+            //Rellenamos los campos de la forma con los valores del bean
+            this.jtfEmpresaRFC.setText(bean.getRfcEmpresa());
+            this.jtfNombreEmpresa.setText(bean.getNombreEmpresa());
+            //Podemos consultar los datos de los estados de cuenta y desde este punto advertir si hay o no saldos o siquiera cuenta en banco
+            if(serviciosCuenta.existenciaSaldos(bean.getRfcEmpresa())){
+                this.verComponentes(false);
+                JOptionPane.showMessageDialog(this, "No hay Saldos para esta empresa", "Saldos de empresa: " + bean.getNombreEmpresa(), JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                this.verComponentes(true);
+            }
+        }        
     }//GEN-LAST:event_jbtEmpresasActionPerformed
 
     private void jbtSaldosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSaldosActionPerformed
@@ -253,25 +299,49 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         // TODO Mismo comportamiento que pulsar el boton de consulta
         this.jbtConsultarEmpresaActionPerformed(evt);
     }//GEN-LAST:event_jtfEmpresaRFCActionPerformed
-    
+
+    private void jcbSeleccionAñoFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAñoFinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbSeleccionAñoFinActionPerformed
+    private void verComponentes(boolean estado){
+        this.jcbSeleccionAñoIni.setVisible(estado);
+        this.jcbSeleccionAñoFin.setVisible(estado);
+        this.jcbSeleccionMesIni.setVisible(estado);
+        this.jcbSeleccionMesFin.setVisible(estado);
+        this.jcbSeleccionInicio.setVisible(estado);
+        this.jcbSeleccionFin.setVisible(estado);
+        
+        this.jlbSeleccionAño.setVisible(estado);
+        this.jlbSeleccionMes.setVisible(estado);
+        this.jlbSeleccionDia.setVisible(estado);
+        this.jlbSeleccionInicio.setVisible(estado);
+        this.jlbSeleccionFin.setVisible(estado);
+        
+        this.jbtConsultarEmpresa.setEnabled(estado);
+        this.jbtSaldos.setEnabled(estado);
+        this.jbtHistorial.setEnabled(estado);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton jbtConsultarEmpresa;
     private javax.swing.JButton jbtEmpresas;
     private javax.swing.JButton jbtHistorial;
     private javax.swing.JButton jbtSaldos;
+    private javax.swing.JComboBox jcbSeleccionAñoFin;
+    private javax.swing.JComboBox jcbSeleccionAñoIni;
+    private javax.swing.JComboBox jcbSeleccionFin;
+    private javax.swing.JComboBox jcbSeleccionInicio;
+    private javax.swing.JComboBox jcbSeleccionMesFin;
+    private javax.swing.JComboBox jcbSeleccionMesIni;
+    private javax.swing.JLabel jlbSeleccionAño;
+    private javax.swing.JLabel jlbSeleccionDia;
+    private javax.swing.JLabel jlbSeleccionFin;
+    private javax.swing.JLabel jlbSeleccionInicio;
+    private javax.swing.JLabel jlbSeleccionMes;
     private javax.swing.JTextField jtfEmpresaRFC;
+    private javax.swing.JTextField jtfNombreEmpresa;
     // End of variables declaration//GEN-END:variables
 }
