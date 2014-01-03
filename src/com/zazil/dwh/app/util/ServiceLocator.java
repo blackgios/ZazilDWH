@@ -47,7 +47,9 @@ public class ServiceLocator {
 //            System.out.println("Base de datos: " + productName);
 //            System.out.println("Version base: " + productVersion);
         }catch(SQLException ex){
+            System.out.println("Error: " + ex.getMessage());
             throw new AppException("Error al obtener la conexion",ex);
+            
         }
         return conexion;
     }

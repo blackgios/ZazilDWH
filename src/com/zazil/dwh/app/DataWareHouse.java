@@ -14,7 +14,8 @@ public class DataWareHouse {
     public DataWareHouse() {
         MenuPrincipalVentana interfazGrafica = new MenuPrincipalVentana();
         interfazGrafica.setVisible(true);
-}
+     
+    }
     
     public static void main(String[] args) {
         DataWareHouse App = new DataWareHouse();
