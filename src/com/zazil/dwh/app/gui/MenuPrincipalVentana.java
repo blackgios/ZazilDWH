@@ -5,6 +5,7 @@
 package com.zazil.dwh.app.gui;
 
 import com.zazil.dwh.app.gui.bancos.SaldosEmpresaVentana;
+import com.zazil.dwh.app.gui.sat.SATVentana;
 
 public class MenuPrincipalVentana extends javax.swing.JFrame {
 
@@ -33,7 +34,7 @@ public class MenuPrincipalVentana extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DataWareHouse - 2014");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Operacion", 0, 0, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Operacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
 
         jbtSaldosEmpresa.setText("Saldos");
         jbtSaldosEmpresa.addActionListener(new java.awt.event.ActionListener() {
@@ -43,6 +44,11 @@ public class MenuPrincipalVentana extends javax.swing.JFrame {
         });
 
         jbtDeclaraciones.setText("Declaraciones");
+        jbtDeclaraciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtDeclaracionesActionPerformed(evt);
+            }
+        });
 
         jbtOperaciones.setText("Operaciones");
 
@@ -98,6 +104,15 @@ public class MenuPrincipalVentana extends javax.swing.JFrame {
         SaldosEmpresaVentana saldosEmpresa = new SaldosEmpresaVentana(this, true);
         saldosEmpresa.setVisible(true);
     }//GEN-LAST:event_jbtSaldosEmpresaActionPerformed
+
+    private void jbtDeclaracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDeclaracionesActionPerformed
+        // TODO Terminado - Ana Carolina Martinez 06/01/2014
+        //Oculta ventana padre
+        this.setVisible(false);
+        //Visualiza ventana SAT
+        SATVentana SATVista = new SATVentana(this, true);
+        SATVista.setVisible(true);
+    }//GEN-LAST:event_jbtDeclaracionesActionPerformed
 
 
 
