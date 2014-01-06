@@ -10,7 +10,7 @@ import javax.swing.JDialog;
  * @author Hector Rodriguez
  */
 public class EmpresasVentana extends JDialog {
-    private ArrayList<EmpresaBean> listaEmpresas = EmpresaService.obtenerEmpresas();
+    EmpresaService servicioGeneral = new EmpresaService();
 
     public EmpresasVentana(JDialog owner, Boolean modal) {
         super(owner, modal);
@@ -73,8 +73,7 @@ public class EmpresasVentana extends JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        EmpresaService servicio = new EmpresaService();
-        ArrayList<String> listaNombres = servicio.obtenerNombresEmpresas();
+        ArrayList<String> listaNombres = this.servicioGeneral.obtenerNombresEmpresas();
 
         for (String string : listaNombres) {
             jcbEmpresas.addItem(string);
@@ -101,8 +100,14 @@ public class EmpresasVentana extends JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAceptarActionPerformed
-        // TODO add your handling code here:
-        jcbEmpresas.getSelectedItem();
+        // TODO Hector Giovanni Rodriguez Ramos 03/01/2014
+        String nombreEmpresa;
+        
+        nombreEmpresa = (String)jcbEmpresas.getSelectedItem();
+        System.out.println("Empresa: " + nombreEmpresa);
+        
+        
+        this.dispose();
     }//GEN-LAST:event_jbtAceptarActionPerformed
     
     
