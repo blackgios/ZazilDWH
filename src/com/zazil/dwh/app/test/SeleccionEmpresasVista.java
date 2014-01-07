@@ -107,7 +107,7 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jbtConsultarEmpresas = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jbtSaldosBancos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -218,10 +218,10 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
 
         jButton3.setText("Historial");
 
-        jButton4.setText("Saldos en Bancos");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jbtSaldosBancos.setText("Saldos en Bancos");
+        jbtSaldosBancos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jbtSaldosBancosActionPerformed(evt);
             }
         });
 
@@ -248,7 +248,7 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
+                        .addComponent(jbtSaldosBancos)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -269,7 +269,7 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtConsultarEmpresas)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jbtSaldosBancos))
                 .addContainerGap())
         );
 
@@ -341,10 +341,10 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jbtConsultarEmpresasActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jbtSaldosBancosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSaldosBancosActionPerformed
         // TODO add your handling code here:
         this.obtenerCombos();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jbtSaldosBancosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -384,7 +384,6 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -395,6 +394,7 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtConsultarEmpresas;
+    private javax.swing.JButton jbtSaldosBancos;
     private javax.swing.JComboBox jcbSeleccionAñoFin;
     private javax.swing.JComboBox jcbSeleccionAñoIni;
     private javax.swing.JComboBox jcbSeleccionDiaFin;

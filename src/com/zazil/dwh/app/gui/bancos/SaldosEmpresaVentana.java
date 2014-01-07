@@ -267,7 +267,7 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
             this.jtfEmpresaRFC.setText(bean.getRfcEmpresa());
             this.jtfNombreEmpresa.setText(bean.getNombreEmpresa());
             //Podemos consultar los datos de los estados de cuenta y desde este punto advertir si hay o no saldos o siquiera cuenta en banco
-            boolean existenSaldos = false;//serviciosCuenta.existenciaSaldos(bean.getRfcEmpresa());
+            boolean existenSaldos = true;//serviciosCuenta.existenciaSaldos(bean.getRfcEmpresa());
             //System.out.println("Hay Saldos: " + existenSaldos);
             if(existenSaldos){
                 //Activamos los componentes necesarios: JComboBox
@@ -383,26 +383,26 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         }
 
         
-//            
-//        System.out.println("Rangos: " + rangos.toString());
-//        System.out.println("AñoInferior: " + Integer.parseInt(inferior.substring(0, 4)) + " Superior: " + Integer.parseInt(superior.substring(0, 4)));
-//        System.out.println("MesInferior: " + Integer.parseInt(inferior.substring(4, 6)) + " Superior: " + Integer.parseInt(superior.substring(4, 6)));
-//        System.out.println("DiaInferior: " + Integer.parseInt(inferior.substring(6)) + " Superior: " + Integer.parseInt(superior.substring(6)));
-//        
-//        for (int i = Integer.parseInt(inferior.substring(0, 4)); i <= Integer.parseInt(superior.substring(0, 4)); i++) {
-//            this.jcbSeleccionAñoIni.addItem(Integer.toString(i));
-//            this.jcbSeleccionAñoFin.addItem(Integer.toString(i));
-//        }
-//        
-//        for (int i = Integer.parseInt(inferior.substring(4, 6)); i <= Integer.parseInt(superior.substring(4, 6)); i++) {
-//            this.jcbSeleccionMesIni.addItem(Integer.toString(i));
-//            this.jcbSeleccionMesFin.addItem(Integer.toString(i));
-//        }
-//        
-//        for (int i = Integer.parseInt(inferior.substring(6)); i <= Integer.parseInt(superior.substring(6)); i++) {
-//            this.jcbSeleccionInicio.addItem(Integer.toString(i));
-//            this.jcbSeleccionFin.addItem(Integer.toString(i));
-//        }
+            
+        System.out.println("Rangos: " + rangos.toString());
+        System.out.println("AñoInferior: " + Integer.parseInt(inferior.substring(0, 4)) + " Superior: " + Integer.parseInt(superior.substring(0, 4)));
+        System.out.println("MesInferior: " + Integer.parseInt(inferior.substring(4, 6)) + " Superior: " + Integer.parseInt(superior.substring(4, 6)));
+        System.out.println("DiaInferior: " + Integer.parseInt(inferior.substring(6)) + " Superior: " + Integer.parseInt(superior.substring(6)));
+        
+        for (int i = Integer.parseInt(inferior.substring(0, 4)); i <= Integer.parseInt(superior.substring(0, 4)); i++) {
+            this.jcbSeleccionAñoIni.addItem(Integer.toString(i));
+            this.jcbSeleccionAñoFin.addItem(Integer.toString(i));
+        }
+        
+        for (int i = Integer.parseInt(inferior.substring(4, 6)); i <= Integer.parseInt(superior.substring(4, 6)); i++) {
+            this.jcbSeleccionMesIni.addItem(Integer.toString(i));
+            this.jcbSeleccionMesFin.addItem(Integer.toString(i));
+        }
+        
+        for (int i = Integer.parseInt(inferior.substring(6)); i <= Integer.parseInt(superior.substring(6)); i++) {
+            this.jcbSeleccionInicio.addItem(Integer.toString(i));
+            this.jcbSeleccionFin.addItem(Integer.toString(i));
+        }
         
     }
     
