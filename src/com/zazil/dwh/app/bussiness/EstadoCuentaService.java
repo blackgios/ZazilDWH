@@ -11,20 +11,40 @@ import com.zazil.dwh.app.util.Saldos;
 import java.util.ArrayList;
 
 public class EstadoCuentaService {
-    
-    public boolean existenciaSaldos(String nombreEmpresa){
+    /**
+     * Dado el RFC de una empresa verificamos si tiene estados de cuenta.
+     * @param rfcEmpresa
+     * @return 
+     */
+    public boolean existenciaSaldos(ArrayList<EstadoCuentaBean> listaEstadosCuenta){
         boolean hayEstados = false;
-        EstadoCuentaDAO dao = new EstadoCuentaDAO();
-        ArrayList<EstadoCuentaBean> listaEstadosCuenta = dao.obtenerEstadosCuentaRFC(nombreEmpresa);
-        
+        //EstadoCuentaDAO dao = new EstadoCuentaDAO();
+        //ArrayList<EstadoCuentaBean> listaEstadosCuenta = dao.obtenerEstadosCuentaRFC(rfcEmpresa);
+        //System.out.println("registros: " + listaEstadosCuenta.size());
         if(listaEstadosCuenta.size() > 0){
             hayEstados = true;
         }
         return hayEstados;
     }
+    /**
+     * Obtenemos una sublista de estados de cuenta
+     * @param listaEstadosCuenta
+     * @param rango
+     * @return 
+     */
+    private ArrayList obtenerEstadosCuenta(ArrayList<EstadoCuentaBean> listaEstadosCuenta, Rango rango){
+        
+        ArrayList<EstadoCuentaBean> nuevaListaEstadosCuenta = new ArrayList<>();
+        for (EstadoCuentaBean estadoCuentaBean : listaEstadosCuenta) {
+            if(Integer.parseInt(estadoCuentaBean.getPeriodo()) >= rango.getRangoInicial()){
+                nuevaListaEstadosCuenta.add(estadoCuentaBean);
+                System.out.println("Añadido: " + estadoCuentaBean.getPeriodo());
+            }
+        }
+        return listaEstadosCuenta;
+    }
     
-    
-    public Rango obtenerRangos(ArrayList<EstadoCuentaBean> listaEstadosCuenta){
+    public Rango obtenerRango(ArrayList<EstadoCuentaBean> listaEstadosCuenta){
         Rango rangoFechas = new Rango(0, 0);
         rangoFechas.setRangoInicial(Integer.parseInt(listaEstadosCuenta.get(0).getPeriodo()));
         int buffer;
@@ -54,6 +74,12 @@ public class EstadoCuentaService {
         listaResultados = dao.obtenerEstadosCuenta(rfcEmpresa, periodoInicial, periodoFinal);
         
         return listaResultados;
+    }
+    
+    public ArrayList obtenerEstadosCuenta(String rfcEmpresa){
+        EstadoCuentaDAO dao = new EstadoCuentaDAO();
+        ArrayList<EstadoCuentaBean> listaEstadosCuenta = dao.obtenerEstadosCuentaRFC(rfcEmpresa);
+        return listaEstadosCuenta;
     }
     
     public void calcularEstadosCuenta(ArrayList<EstadoCuentaBean> listaEstadosCuenta){

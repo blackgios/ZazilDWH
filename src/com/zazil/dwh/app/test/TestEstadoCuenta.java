@@ -27,7 +27,7 @@ public class TestEstadoCuenta {
         //Usaremos un RFC de la base de datos: GPV120928NB5
         listaEstadosCuenta = dao.obtenerEstadosCuentaRFC("GPV120928NB5");
         EstadoCuentaService servicio = new EstadoCuentaService();
-        rango = servicio.obtenerRangos(listaEstadosCuenta);//Obtiene todos los registros
+        rango = servicio.obtenerRango(listaEstadosCuenta);//Obtiene todos los registros
         listaEstadosCuenta2 = servicio.obtenerEstadosCuenta("GPV120928NB5",rango);
         System.out.println("Lista2: " + listaEstadosCuenta2.size());
         for (EstadoCuentaBean estadoCuentaBean : listaEstadosCuenta2) {

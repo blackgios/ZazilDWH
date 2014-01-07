@@ -43,6 +43,11 @@ public class MenuPrincipalVentana extends javax.swing.JFrame {
         });
 
         jbtDeclaraciones.setText("Declaraciones");
+        jbtDeclaraciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtDeclaracionesActionPerformed(evt);
+            }
+        });
 
         jbtOperaciones.setText("Operaciones");
 
@@ -98,6 +103,10 @@ public class MenuPrincipalVentana extends javax.swing.JFrame {
         SaldosEmpresaVentana saldosEmpresa = new SaldosEmpresaVentana(this, true);
         saldosEmpresa.setVisible(true);
     }//GEN-LAST:event_jbtSaldosEmpresaActionPerformed
+
+    private void jbtDeclaracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDeclaracionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtDeclaracionesActionPerformed
 
 
 
