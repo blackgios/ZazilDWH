@@ -4,11 +4,14 @@
  */
 package com.zazil.dwh.app.gui.sat;
 
+import com.zazil.dwh.app.bussiness.EmpresaService;
+import com.zazil.dwh.app.model.EmpresaBean;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class SATVentana extends javax.swing.JDialog {
      private JFrame padre;
-    //private EmpresaService serviciosEmpresa = new EmpresaService();
+     private EmpresaService serviciosEmpresa = new EmpresaService();
     //private EstadoCuentaService serviciosCuenta = new EstadoCuentaService();
     public SATVentana(JFrame owner, boolean modal) {
         super(owner, modal);
@@ -33,9 +36,9 @@ public class SATVentana extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        jtfEmpresaRFC = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        jtfNombreEmpresa = new javax.swing.JTextField();
         jcbMes = new javax.swing.JComboBox();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -51,14 +54,19 @@ public class SATVentana extends javax.swing.JDialog {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Empresa", 0, 0, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Empresa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
 
-        jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(255, 204, 51));
+        jtfEmpresaRFC.setEditable(false);
+        jtfEmpresaRFC.setBackground(new java.awt.Color(255, 204, 51));
 
         jButton1.setText("Empresas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jTextField4.setEditable(false);
+        jtfNombreEmpresa.setEditable(false);
 
         jcbMes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -83,7 +91,7 @@ public class SATVentana extends javax.swing.JDialog {
                         .addGap(0, 10, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfEmpresaRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -96,7 +104,7 @@ public class SATVentana extends javax.swing.JDialog {
                                 .addComponent(jcbMes, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2))
-                            .addComponent(jTextField4)))
+                            .addComponent(jtfNombreEmpresa)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -107,12 +115,12 @@ public class SATVentana extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfEmpresaRFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -153,6 +161,21 @@ public class SATVentana extends javax.swing.JDialog {
         this.padre.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO en proceso - Ana Carolina Martinez
+        //Obtenemos el string de la llamada de la ventana
+        Object obj = JOptionPane.showInputDialog(null, "Valores", "Titulo",JOptionPane.QUESTION_MESSAGE,null,this.serviciosEmpresa.obtenerNombresEmpresas().toArray(),1);
+        
+        if (obj != null) {
+            //Mandamos a llamar el bean de la empresa
+            EmpresaBean bean = serviciosEmpresa.obtenerEmpresa(obj.toString());
+            //Rellenamos los campos de la forma con los valores del bean
+            this.jtfEmpresaRFC.setText(bean.getRfcEmpresa());
+            this.jtfNombreEmpresa.setText(bean.getNombreEmpresa());
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -165,8 +188,8 @@ public class SATVentana extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JComboBox jcbMes;
+    private javax.swing.JTextField jtfEmpresaRFC;
+    private javax.swing.JTextField jtfNombreEmpresa;
     // End of variables declaration//GEN-END:variables
 }
