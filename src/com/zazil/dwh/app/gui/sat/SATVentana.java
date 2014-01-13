@@ -49,7 +49,7 @@ public class SATVentana extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtfUltDec = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Seleccione Empresa");
@@ -92,7 +92,7 @@ public class SATVentana extends javax.swing.JDialog {
 
         jLabel4.setText("Ultima Declaracion");
 
-        jTextField1.setEditable(false);
+        jtfUltDec.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -111,7 +111,7 @@ public class SATVentana extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jtfUltDec, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3)
@@ -145,7 +145,7 @@ public class SATVentana extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfUltDec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -198,7 +198,8 @@ public class SATVentana extends javax.swing.JDialog {
             this.jtfEmpresaRFC.setText(bean.getRfcEmpresa());
             this.jtfNombreEmpresa.setText(bean.getNombreEmpresa());
             //Mandamos a llamar el bean de SAT
-            SATBean satbean = serviciosSAT.obtenerDec(obj.toString());       
+            SATBean satbean = serviciosSAT.obtenerDec(obj.toString());
+            this.jtfUltDec.setText(satbean.getPeriodoUltaDecl());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -219,9 +220,9 @@ public class SATVentana extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JComboBox jcbMes;
     private javax.swing.JTextField jtfEmpresaRFC;
     private javax.swing.JTextField jtfNombreEmpresa;
+    private javax.swing.JTextField jtfUltDec;
     // End of variables declaration//GEN-END:variables
 }
