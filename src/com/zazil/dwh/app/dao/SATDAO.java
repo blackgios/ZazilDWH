@@ -22,7 +22,31 @@ public class SATDAO extends BaseDAO{
      * cada vez que se llame a un metodo.
      */
     private ArrayList<SATBean> listaSAT = new ArrayList<>();
-     
+
+         public ArrayList<SATBean> obtenerSAT () {
+         ArrayList<SATBean> listaSAT = null;
+         //1. Creamos query con parametro de entrada RFC
+         StringBuilder query = new StringBuilder ("select * from SAT");
+         //2.- Creamos conexion y ejecutamos consulta
+         try(Connection cnx = this.obtenerConexion();
+                 Statement consulta = cnx.createStatement()){
+            resultados = consulta.executeQuery(query.toString());
+            
+             if(resultados.next()){
+                SATBean satE= new SATBean (resultados.getString("rfcEmpresa"),
+                        resultados.getString("accesoSAT"),
+                        resultados.getString("periodoUltDecl"), 
+                        resultados.getString("periodoUltDiot"));
+                listaSAT.add(satE);
+            }
+            
+        }catch(Exception ex){
+            System.out.println("Excepcion: " + ex.getMessage());
+        }         
+         return listaSAT;
+     }
+
+    
      /**
       * Metodo: public ArrayList obtenerSATRFC (String rfc)
       * Obtiene TODOS los registros de TODOS los periodos de las declaraciones
@@ -30,7 +54,8 @@ public class SATDAO extends BaseDAO{
       * @param rfc
       * @return 
       */
-     public ArrayList obtenerSATRFC (String rfc) {
+     public SATBean obtenerSATRFC (String rfc) {
+         SATBean empresa = null;
          //1. Creamos query con parametro de entrada RFC
          StringBuilder query = new StringBuilder ("select * from SAT where rfcEmpresa = '");
          query.append(rfc).append("'");
@@ -39,20 +64,18 @@ public class SATDAO extends BaseDAO{
                  Statement consulta = cnx.createStatement()){
             resultados = consulta.executeQuery(query.toString());
             
-            while(resultados.next()){
-                SATBean sat = new SATBean (resultados.getString("rfcEmpresa"),
+             if(resultados.next()){
+                empresa = new SATBean (resultados.getString("rfcEmpresa"),
                         resultados.getString("accesoSAT"),
                         resultados.getString("periodoUltDecl"), 
                         resultados.getString("periodoUltDiot"));
-                //Añadimos el estado de cuenta a la lista
-                this.listaSAT.add(sat);
             }
             
         }catch(Exception ex){
             System.out.println("Excepcion: " + ex.getMessage());
-        }
-        
-         return this.listaSAT;
+        }         
+        //Regresa el BEAN
+         return empresa;
      }
 
      /**

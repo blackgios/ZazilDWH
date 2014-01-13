@@ -44,6 +44,7 @@ public class EstadoCuentaService {
         return listaEstadosCuenta;
     }
     
+    
     public Rango obtenerRango(ArrayList<EstadoCuentaBean> listaEstadosCuenta){
         Rango rangoFechas = new Rango(0, 0);
         rangoFechas.setRangoInicial(Integer.parseInt(listaEstadosCuenta.get(0).getPeriodo()));
