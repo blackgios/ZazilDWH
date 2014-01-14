@@ -15,9 +15,10 @@ import java.util.ArrayList;
 public class SATService {
     //Busca la ultima declaracion de acuerdo al rfc de la empresa
     
-    public static ArrayList obtenerDeclaraciones (){
+    public ArrayList obtenerDeclaraciones (){
         ArrayList <SATBean> listaDeclara = null;
         SATDAO dao = new SATDAO();
+        //Que sucede si ArrayList obtenido del dao esta vacio?, es decir no tiene informacion?
         listaDeclara = dao.obtenerSAT();
         
         return listaDeclara;
@@ -25,10 +26,11 @@ public class SATService {
     
     public SATBean obtenerDec(String rfcEmpresa){
         SATBean declaraEncontrada = null;
-        ArrayList<SATBean> listaEmpresas = SATService.obtenerDeclaraciones();
+        ArrayList<SATBean> listaEmpresas = this.obtenerDeclaraciones();
         for (SATBean satBean: listaEmpresas){
             if (satBean.getRfcEmpresa().equals(rfcEmpresa)) {
                 declaraEncontrada=satBean;
+                System.out.println("Empresa: " + declaraEncontrada.getRfcEmpresa());
             }
         }
         return declaraEncontrada;

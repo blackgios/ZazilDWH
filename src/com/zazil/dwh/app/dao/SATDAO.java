@@ -24,20 +24,19 @@ public class SATDAO extends BaseDAO{
     private ArrayList<SATBean> listaSAT = new ArrayList<>();
 
          public ArrayList<SATBean> obtenerSAT () {
-         ArrayList<SATBean> listaSAT = null;
-         //1. Creamos query con parametro de entrada RFC
-         StringBuilder query = new StringBuilder ("select * from SAT");
-         //2.- Creamos conexion y ejecutamos consulta
-         try(Connection cnx = this.obtenerConexion();
-                 Statement consulta = cnx.createStatement()){
-            resultados = consulta.executeQuery(query.toString());
-            
-             if(resultados.next()){
-                SATBean satE= new SATBean (resultados.getString("rfcEmpresa"),
+            //1. Creamos query con parametro de entrada RFC
+            StringBuilder query = new StringBuilder ("select * from SAT");
+            //2.- Creamos conexion y ejecutamos consulta
+            try(Connection cnx = this.obtenerConexion();
+                Statement consulta = cnx.createStatement()){
+                resultados = consulta.executeQuery(query.toString());
+            //cambio de if por while
+             while(resultados.next()){
+                SATBean satBean = new SATBean (resultados.getString("rfcEmpresa"),
                         resultados.getString("accesoSAT"),
-                        resultados.getString("periodoUltDecl"), 
-                        resultados.getString("periodoUltDiot"));
-                listaSAT.add(satE);
+                        resultados.getString("periodoUltaDecl"), 
+                        resultados.getString("periodoUltaDiot"));
+                listaSAT.add(satBean);
             }
             
         }catch(Exception ex){

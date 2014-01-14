@@ -197,8 +197,8 @@ public class SATVentana extends javax.swing.JDialog {
             //Rellenamos los campos de la forma con los valores del bean
             this.jtfEmpresaRFC.setText(bean.getRfcEmpresa());
             this.jtfNombreEmpresa.setText(bean.getNombreEmpresa());
-            //Mandamos a llamar el bean de SAT
-            SATBean satbean = serviciosSAT.obtenerDec(obj.toString());
+            //Mandamos a llamar el bean de SAT: codigo anterior: serviciosSAT.obtenerDec(obj.toString())
+            SATBean satbean = serviciosSAT.obtenerDec(bean.getRfcEmpresa());
             this.jtfUltDec.setText(satbean.getPeriodoUltaDecl());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
