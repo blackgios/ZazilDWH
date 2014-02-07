@@ -15,6 +15,5 @@ public class DataWareHouse {
     
     public static void main(String[] args) {
         DataWareHouse App = new DataWareHouse();
-        //System.out.println("Clase: " + App.toString());
     }
 }

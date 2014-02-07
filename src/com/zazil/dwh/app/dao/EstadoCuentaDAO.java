@@ -32,7 +32,7 @@ public class EstadoCuentaDAO extends BaseDAO{
         //1.- Creamos el query para la base de datos con el parametro a usar
         StringBuilder query = new StringBuilder("select * from EstadoCuenta where rfcEmpresa = '");
         query.append(rfc).append("'");
-        //2.- Creamo conexion y ejecutamos consulta
+        //2.- Creamos conexion y ejecutamos consulta
         try(Connection cnx = this.obtenerConexion();
                 Statement consulta = cnx.createStatement()){
             resultados = consulta.executeQuery(query.toString());

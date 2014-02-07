@@ -8,7 +8,6 @@ import com.zazil.dwh.app.bussiness.EmpresaService;
 import com.zazil.dwh.app.bussiness.EstadoCuentaService;
 import com.zazil.dwh.app.model.EmpresaBean;
 import com.zazil.dwh.app.model.EstadoCuentaBean;
-import com.zazil.dwh.app.util.Rango;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -29,7 +28,6 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
     private void iniciarServicios(){
         this.apariencia();
         this.servicioEmpresa = new EmpresaService();
-        this.servicioEstadoCuenta = new EstadoCuentaService();
     }
     
     private void apariencia(){
@@ -299,22 +297,6 @@ public class SeleccionEmpresasVista extends javax.swing.JFrame {
         
         if(obj != null){
         //Si el usuario no presiono cancelar
-            System.out.println("Datos: " + obj.toString());
-            EmpresaBean beanEmpresa = this.servicioEmpresa.obtenerEmpresa(obj.toString());
-            this.jtfEmpresaRFC.setText(beanEmpresa.getRfcEmpresa());
-            this.jtfEmpresaNombre.setText(beanEmpresa.getNombreEmpresa());
-            //Obtenemos los estados de cuenta
-            this.listaEstadosCuenta = servicioEstadoCuenta.obtenerEstadosCuenta(beanEmpresa.getRfcEmpresa());
-            //Este valor lo obtendremos al evaluar la lista de estados de cuenta
-            boolean existenSaldos = this.servicioEstadoCuenta.existenciaSaldos(this.listaEstadosCuenta);
-            if(existenSaldos){
-                //activamos los combos
-                this.verCombos(existenSaldos);
-                //vaciamos los combos
-                this.vaciarCombos();
-            }else{
-                
-            }
         }else{
         // Conserva estado anterior: no hace nada
             System.out.println("No selecciono nada");

@@ -7,39 +7,91 @@ package com.zazil.dwh.app.gui.bancos;
 import com.zazil.dwh.app.bussiness.EmpresaService;
 import com.zazil.dwh.app.bussiness.EstadoCuentaService;
 import com.zazil.dwh.app.model.EmpresaBean;
-import com.zazil.dwh.app.util.Rango;
+import java.util.ArrayList;
+import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+//018001234242
 public class SaldosEmpresaVentana extends javax.swing.JDialog {
     private JFrame padre;
-    private EmpresaService serviciosEmpresa = new EmpresaService();
-    private EstadoCuentaService serviciosCuenta = new EstadoCuentaService();
-    private boolean restriccion1;
-    private boolean restriccion2;
-    private boolean restriccion3;
+    private EmpresaService serviciosEmpresa;
+    private EstadoCuentaService serviciosCuenta;
+    private boolean estadoActivo = false;
     
-    private void limpiarRestricciones(){
-        this.restriccion1 = false;
-        this.restriccion2 = false;
-        this.restriccion3 = false;
+    private void actualizarCombos(){
+        System.out.println("Entrando: private void actualizarCombos()");
+        Set<String> listaAños = serviciosCuenta.obtieneAños();
+        for (String año : listaAños) {
+            this.jcbSeleccionAñoIni.addItem(año);
+            this.jcbSeleccionAñoFin.addItem(año);
+        }
+        this.jcbSeleccionAñoFin.setSelectedIndex(this.jcbSeleccionAñoFin.getComponentCount()-1);
+        
+        String AñoIni = this.jcbSeleccionAñoIni.getSelectedItem().toString();
+        String AñoFin = this.jcbSeleccionAñoFin.getSelectedItem().toString();
+        this.jcbSeleccionMesIni.removeAllItems();
+        this.jcbSeleccionInicio.removeAllItems();
+        Set<String> listaMesesIni = serviciosCuenta.obtieneMeses(AñoIni);
+        Set<String> listaMesesFin = serviciosCuenta.obtieneMeses(AñoFin);
+        for (String mes : listaMesesIni) {
+            this.jcbSeleccionMesIni.addItem(mes);
+        }
+        for (String mes : listaMesesFin) {
+            this.jcbSeleccionMesFin.addItem(mes);
+        }
+        this.jcbSeleccionMesFin.setSelectedIndex(this.jcbSeleccionMesFin.getItemCount() - 1);
+        
+        String MesIni = this.jcbSeleccionMesIni.getSelectedItem().toString();
+        String MesFin = this.jcbSeleccionMesFin.getSelectedItem().toString();
+        
+        ArrayList<String> listaDiasIni = serviciosCuenta.obtieneDias(AñoIni, MesIni);
+        ArrayList<String> listaDiasFin = serviciosCuenta.obtieneDias(AñoFin, MesFin);
+        for (String dia : listaDiasIni) {
+            this.jcbSeleccionInicio.addItem(dia);
+        }
+        for (String dia : listaDiasFin) {
+            this.jcbSeleccionFin.addItem(dia);
+        }
+        System.out.println("Saliendo: private void actualizarCombos()");
     }
     
+    private void borrarCombos(){
+        // TODO Borra los items de los combos, lo llamamos cada que seleccionamos una nueva empresa
+        this.jcbSeleccionAñoIni.removeAllItems();
+        this.jcbSeleccionAñoFin.removeAllItems();
+        this.jcbSeleccionMesIni.removeAllItems();
+        this.jcbSeleccionMesFin.removeAllItems();
+        this.jcbSeleccionInicio.removeAllItems();
+        this.jcbSeleccionFin.removeAllItems();
+    }
+
+    private void verComponentes(boolean estado){
+        this.jcbSeleccionAñoIni.setVisible(estado);
+        this.jcbSeleccionAñoFin.setVisible(estado);
+        this.jcbSeleccionMesIni.setVisible(estado);
+        this.jcbSeleccionMesFin.setVisible(estado);
+        this.jcbSeleccionInicio.setVisible(estado);
+        this.jcbSeleccionFin.setVisible(estado);
+        
+        this.jlbSeleccionAño.setVisible(estado);
+        this.jlbSeleccionMes.setVisible(estado);
+        this.jlbSeleccionDia.setVisible(estado);
+        this.jlbSeleccionInicio.setVisible(estado);
+        this.jlbSeleccionFin.setVisible(estado);
+        
+        this.jbtConsultarEmpresa.setEnabled(estado);
+        this.jbtSaldos.setEnabled(estado);
+        this.jbtHistorial.setEnabled(estado);
+    }
     
     public SaldosEmpresaVentana(JFrame owner, boolean modal) {
         super(owner, modal);
         this.padre = owner;
-        this.limpiarRestricciones();
+        this.serviciosEmpresa = new EmpresaService();
+        //Hasta el final se hace la llamada al JDialog
         this.initComponents();
+        this.verComponentes(false);
     }
-    /**
-     * Creates new form SaldosEmpresaVentana
-     */
-    
-//    public SaldosEmpresaVentana() {
-//        //throw UnsupportedOperationException ex;
-//    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,13 +124,14 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta de Saldos");
+        setPreferredSize(new java.awt.Dimension(600, 300));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Empresa", 0, 0, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Empresa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
 
         jLabel1.setText("Empresa:");
 
@@ -163,27 +216,25 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jlbSeleccionAño)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jcbSeleccionAñoIni, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jcbSeleccionAñoIni, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jcbSeleccionMesFin, 0, 140, Short.MAX_VALUE)
-                                        .addComponent(jcbSeleccionMesIni, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jlbSeleccionMes))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jlbSeleccionMes)
+                                    .addComponent(jcbSeleccionMesIni, 0, 126, Short.MAX_VALUE)
+                                    .addComponent(jcbSeleccionMesFin, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlbSeleccionDia)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jcbSeleccionInicio, 0, 50, Short.MAX_VALUE)
-                                        .addComponent(jcbSeleccionFin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jlbSeleccionDia)
+                                        .addGap(26, 26, 26))
+                                    .addComponent(jcbSeleccionInicio, javax.swing.GroupLayout.Alignment.TRAILING, 0, 64, Short.MAX_VALUE)
+                                    .addComponent(jcbSeleccionFin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(14, 14, 14)
                                 .addComponent(jbtConsultarEmpresa))
                             .addComponent(jtfNombreEmpresa)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jbtHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                         .addComponent(jbtSaldos, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -212,12 +263,11 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
                     .addComponent(jlbSeleccionInicio)
                     .addComponent(jbtConsultarEmpresa))
                 .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcbSeleccionFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jcbSeleccionMesFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jcbSeleccionAñoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jlbSeleccionFin)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcbSeleccionMesFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbSeleccionAñoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbSeleccionFin)
+                    .addComponent(jcbSeleccionFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtSaldos)
@@ -262,27 +312,26 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         Object obj = JOptionPane.showInputDialog(null, "Valores", "Titulo", JOptionPane.QUESTION_MESSAGE, null, this.serviciosEmpresa.obtenerNombresEmpresas().toArray(), 1);
         //System.out.println("Empresa: " + obj.toString());
         if(obj != null){
+            
             EmpresaBean bean = serviciosEmpresa.obtenerEmpresa(obj.toString());
             //Rellenamos los campos de la forma con los valores del bean
             this.jtfEmpresaRFC.setText(bean.getRfcEmpresa());
             this.jtfNombreEmpresa.setText(bean.getNombreEmpresa());
+            //System.out.println("Empresa: " + bean.getNombreEmpresa() + " RFC: " + bean.getRfcEmpresa());
+            this.serviciosCuenta = new EstadoCuentaService(bean.getRfcEmpresa());
             //Podemos consultar los datos de los estados de cuenta y desde este punto advertir si hay o no saldos o siquiera cuenta en banco
-            boolean existenSaldos = true;//serviciosCuenta.existenciaSaldos(bean.getRfcEmpresa());
+            boolean existenSaldos = serviciosCuenta.estadoOptimo();//serviciosCuenta.existenciaSaldos(bean.getRfcEmpresa());
             //System.out.println("Hay Saldos: " + existenSaldos);
             if(existenSaldos){
                 //Activamos los componentes necesarios: JComboBox
                 this.verComponentes(existenSaldos);
-                //Activamos todas las banderas de los combos
-                this.limpiarRestricciones();
                 //Si los combos tienen elementos los borramos
                 this.borrarCombos();
-                //Obtenemos el rango de estados de cuenta de dicha empresa
-                Rango rangos;
-                rangos = serviciosCuenta.obtenerRango(serviciosCuenta.obtenerEstadosCuenta(bean.getRfcEmpresa()));
-//                System.out.println("Rangos: " + rangos.toString());
-//                System.out.println("Metodo: private void jbtEmpresasActionPerformed(java.awt.event.ActionEvent evt)");
-                //Activamos solo los combos que se usaran.
-                this.actualizarComponentes(rangos);
+                //Se actualizan combos
+                this.actualizarCombos();
+                //Con esta bandera ya podemos usar el combo de meses
+                this.estadoActivo = true;
+                //this.actualizarComponentes(serviciosCuenta.getPeriodoMayor(),serviciosCuenta.getPeriodoMenor());
                 this.jbtConsultarEmpresa.grabFocus();
             }else{
                 this.verComponentes(existenSaldos);
@@ -312,110 +361,8 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
     private void jcbSeleccionAñoFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAñoFinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbSeleccionAñoFinActionPerformed
-
-    private void verComponentes(boolean estado){
-        this.jcbSeleccionAñoIni.setVisible(estado);
-        this.jcbSeleccionAñoFin.setVisible(estado);
-        this.jcbSeleccionMesIni.setVisible(estado);
-        this.jcbSeleccionMesFin.setVisible(estado);
-        this.jcbSeleccionInicio.setVisible(estado);
-        this.jcbSeleccionFin.setVisible(estado);
-        
-        this.jlbSeleccionAño.setVisible(estado);
-        this.jlbSeleccionMes.setVisible(estado);
-        this.jlbSeleccionDia.setVisible(estado);
-        this.jlbSeleccionInicio.setVisible(estado);
-        this.jlbSeleccionFin.setVisible(estado);
-        
-        this.jbtConsultarEmpresa.setEnabled(estado);
-        this.jbtSaldos.setEnabled(estado);
-        this.jbtHistorial.setEnabled(estado);
-    }
-    
-    private void actualizarComponentes(Rango rangos){
-        //System.out.println("Metodo: private void actualizarComponentes(Rango rangos)");
-        //Aqui se llenan los combos de Año, Mes, y Dia en la forma de las empresas
-        String inferior = Integer.toString(rangos.getRangoInicial());
-        String superior = Integer.toString(rangos.getRangoFinal());
-        //Monitor para ver que informacion es la que se va a cargar
-        System.out.println("Inferior: " + inferior + " Superior: " + superior);
-
-        //Monitores Particulares
-        System.out.println("AñoInferior: " + Integer.parseInt(inferior.substring(0, 4)) + " Superior: " + Integer.parseInt(superior.substring(0, 4)));
-        System.out.println("MesInferior: " + Integer.parseInt(inferior.substring(4, 6)) + " Superior: " + Integer.parseInt(superior.substring(4, 6)));
-        System.out.println("DiaInferior: " + Integer.parseInt(inferior.substring(6)) + " Superior: " + Integer.parseInt(superior.substring(6)));
-
-        this.jcbSeleccionAñoIni.addItem(inferior.substring(0, 4));
-        this.jcbSeleccionAñoFin.addItem(superior.substring(0, 4));
-        
-        this.jcbSeleccionMesIni.addItem(inferior.substring(4, 6));
-        this.jcbSeleccionMesFin.addItem(superior.substring(4, 6));
-        
-        this.jcbSeleccionInicio.addItem(inferior.substring(6));
-        this.jcbSeleccionFin.addItem(superior.substring(6));
-        
-        if(Integer.parseInt(inferior.substring(0, 4)) == Integer.parseInt(superior.substring(0, 4))){
-            this.restriccion1 = true;
-        }
-        if(Integer.parseInt(inferior.substring(4, 6)) == Integer.parseInt(superior.substring(4, 6))){
-            this.restriccion2 = true;
-        }
-        if(Integer.parseInt(inferior.substring(6)) == Integer.parseInt(superior.substring(6))){
-            this.restriccion3 = true;
-        }
-
-        if(restriccion3 && (restriccion2 && restriccion1)){
-            //Solo hay estados de cuenta de 1 año de 1 mes de 1 dia: ocultamos todos los finales.
-            this.jlbSeleccionFin.setVisible(false);
-            this.jcbSeleccionAñoFin.setVisible(false);
-            this.jcbSeleccionMesFin.setVisible(false);
-            this.jcbSeleccionFin.setVisible(false);
-        }else if(restriccion2 && restriccion1){
-            //Solo hay estados de cuenta de 1 año en 1 mes: ocultamos año y mes finales.
-            this.jcbSeleccionAñoFin.setVisible(false);
-            this.jcbSeleccionMesFin.setVisible(false);
-        }else if(restriccion1){
-            //Solo hay estados de cuenta de 1 año: ocultamos año final
-            this.jcbSeleccionAñoFin.setVisible(false);
-        }else{
-            //Hay estados de cuenta de varios años
-            System.out.println("Hay mas años activos");
-        }
-
-        
-            
-        System.out.println("Rangos: " + rangos.toString());
-        System.out.println("AñoInferior: " + Integer.parseInt(inferior.substring(0, 4)) + " Superior: " + Integer.parseInt(superior.substring(0, 4)));
-        System.out.println("MesInferior: " + Integer.parseInt(inferior.substring(4, 6)) + " Superior: " + Integer.parseInt(superior.substring(4, 6)));
-        System.out.println("DiaInferior: " + Integer.parseInt(inferior.substring(6)) + " Superior: " + Integer.parseInt(superior.substring(6)));
-        
-        for (int i = Integer.parseInt(inferior.substring(0, 4)); i <= Integer.parseInt(superior.substring(0, 4)); i++) {
-            this.jcbSeleccionAñoIni.addItem(Integer.toString(i));
-            this.jcbSeleccionAñoFin.addItem(Integer.toString(i));
-        }
-        
-        for (int i = Integer.parseInt(inferior.substring(4, 6)); i <= Integer.parseInt(superior.substring(4, 6)); i++) {
-            this.jcbSeleccionMesIni.addItem(Integer.toString(i));
-            this.jcbSeleccionMesFin.addItem(Integer.toString(i));
-        }
-        
-        for (int i = Integer.parseInt(inferior.substring(6)); i <= Integer.parseInt(superior.substring(6)); i++) {
-            this.jcbSeleccionInicio.addItem(Integer.toString(i));
-            this.jcbSeleccionFin.addItem(Integer.toString(i));
-        }
-        
-    }
-    
-    private void borrarCombos(){
-        // TODO Borra los items de los combos, lo llamamos cada que seleccionamos una nueva empresa
-        this.jcbSeleccionAñoIni.removeAllItems();
-        this.jcbSeleccionAñoFin.removeAllItems();
-        this.jcbSeleccionMesIni.removeAllItems();
-        this.jcbSeleccionMesFin.removeAllItems();
-        this.jcbSeleccionInicio.removeAllItems();
-        this.jcbSeleccionFin.removeAllItems();
-    }
-    
+/**/
+    /***/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

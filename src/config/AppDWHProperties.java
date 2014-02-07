@@ -1,19 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package config;
-
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Properties;
-
 /**
  *
  * @author Hector Rodriguez
  */
+package config;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Properties;
+
 public class AppDWHProperties {
-    public static String FILE_CONFIG = "/config/APPDWH.properties";
+    public static String FILE_CONFIG = "/config/AppDWH.properties";
     private static Properties propertiesObject;
     
     static{
@@ -30,15 +27,15 @@ public class AppDWHProperties {
                 /** Cargamos los datos de configuracion al propio objeto*/
                 AppDWHProperties.propertiesObject.load(streamEntrada);
             }
-        }catch(Exception ex){
-            System.out.println("No se pudo encontrar fichero de configuracion" + ex.getMessage());
+        }catch(IOException ex){
+            System.out.println("No se pudo encontrar fichero de configuracion: " + ex.getCause());
         }
     }
     
     public static String getProperty(String key){
         String value = AppDWHProperties.propertiesObject.getProperty(key);
         if(value == null){
-            System.out.println("Valor de configuracion no encontrado" + key);
+            System.out.println("Valor de configuracion no encontrado: " + key);
         }
         
         return value;
