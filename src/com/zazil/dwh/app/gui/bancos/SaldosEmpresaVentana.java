@@ -131,7 +131,7 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Empresa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Empresa", 0, 0, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
 
         jLabel1.setText("Empresa:");
 
@@ -350,6 +350,12 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         // TODO Obtener RFC y ejecutar consulta
         if(this.jtfEmpresaRFC.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Se necesita proporcionar RFC");
+        }else{
+            /**
+             * Creamos instancia de TablaSaldosVentana 
+             * y le enviamos referencia del service que usamos.
+             */
+            TablaSaldosVentana tablaVentana = new TablaSaldosVentana(this,true,serviciosCuenta);
         }
     }//GEN-LAST:event_jbtConsultarEmpresaActionPerformed
 

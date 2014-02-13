@@ -8,7 +8,6 @@ import com.zazil.dwh.app.dao.EstadoCuentaDAO;
 import com.zazil.dwh.app.model.EstadoCuentaBean;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -98,7 +97,7 @@ public class EstadoCuentaService {
             //System.out.println("Periodo Menor: " + this.getPeriodoMenor());
         }
     }
-    public void crearMapa(){
+    private void crearMapa(){
         for(Iterator<EstadoCuentaBean> it = this.listaEstadosCuenta.iterator(); it.hasNext();) {
             //Con Iterator Obtenemos un objeto de la listaGeneral de estados de cuenta
             EstadoCuentaBean estadoCuentaBean = it.next();
@@ -140,7 +139,7 @@ public class EstadoCuentaService {
         }//Del for principal
         //System.out.println("\n");
 //        System.out.println("\nNumero de años: " + this.mapaGeneral.keySet().size());
-//        
+        /*
         for (Map.Entry<String, SortedMap<String, ArrayList<String>>> listaAños : mapaGeneral.entrySet()) {
             String año = listaAños.getKey();
             SortedMap<String, ArrayList<String>> MapaAños = listaAños.getValue();
@@ -156,6 +155,7 @@ public class EstadoCuentaService {
                 System.out.println("");
             }
         }
+        */
     }
     /**
      * Problema: se rellenan los combos de la forma en manera de cascada, 
@@ -181,8 +181,14 @@ public class EstadoCuentaService {
         ArrayList<String> listaDias = this.mapaGeneral.get(año).get(mes);
         return listaDias;
     }
+    
     /**
-     * Obtener primer y ultimo mes de cierto año
+     * Recibido un periodoInicial y un periodoFinal 
+     * obtenemos un subconjunto de estados de cuenta.
+     * En este subconjunto de estados de cuenta se
+     * analizaran los cambios en los 
      */
+    
+    
     
 }

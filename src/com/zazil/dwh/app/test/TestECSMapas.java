@@ -19,7 +19,7 @@ public class TestECSMapas {
         EstadoCuentaService servicioEstadoCuenta= new EstadoCuentaService(bean.getRfcEmpresa());
         
         //servicioEstadoCuenta.obtenerMapas();
-        servicioEstadoCuenta.crearMapa();
+        //servicioEstadoCuenta.crearMapa();
 //        Set<String> set;
 //        set = servicioEstadoCuenta.obtieneAños();
 //        for (String string : set) {

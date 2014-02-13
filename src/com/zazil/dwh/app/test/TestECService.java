@@ -16,7 +16,7 @@ public class TestECService {
         EmpresaBean empresa = principal.obtenerEmpresa();
         
         EstadoCuentaService servicio = new EstadoCuentaService(empresa.getRfcEmpresa());
-        servicio.crearMapa();
+        //servicio.crearMapa();
         
 //        System.out.println("Activo: " + servicio.estadoOptimo());
 //        System.out.println("Mayor: " + servicio.getPeriodoMayor());
