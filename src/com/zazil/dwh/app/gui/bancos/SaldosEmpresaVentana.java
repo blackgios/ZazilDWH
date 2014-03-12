@@ -7,28 +7,39 @@ package com.zazil.dwh.app.gui.bancos;
 import com.zazil.dwh.app.bussiness.EmpresaService;
 import com.zazil.dwh.app.bussiness.EstadoCuentaService;
 import com.zazil.dwh.app.model.EmpresaBean;
+import com.zazil.dwh.app.model.EstadoCuentaBean;
 import java.util.ArrayList;
 import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 //018001234242
-public class SaldosEmpresaVentana extends javax.swing.JDialog {
+public class SaldosEmpresaVentana extends javax.swing.JFrame {
     private JFrame padre;
     private EmpresaService serviciosEmpresa;
     private EstadoCuentaService serviciosCuenta;
     private boolean estadoActivo = false;
     
+    
+    public SaldosEmpresaVentana(JFrame owner) {
+        this.padre = owner;
+        this.serviciosEmpresa = new EmpresaService();
+        //Hasta el final se hace la llamada al JDialog
+        this.initComponents();
+        this.verComponentes(false);
+    }
+    
     private void actualizarCombos(){
-        System.out.println("Entrando: private void actualizarCombos()");
+        //System.out.println("Entrando: private void actualizarCombos()");
         Set<String> listaAños = serviciosCuenta.obtieneAños();
         for (String año : listaAños) {
             this.jcbSeleccionAñoIni.addItem(año);
             this.jcbSeleccionAñoFin.addItem(año);
         }
-        this.jcbSeleccionAñoFin.setSelectedIndex(this.jcbSeleccionAñoFin.getComponentCount()-1);
         
         String AñoIni = this.jcbSeleccionAñoIni.getSelectedItem().toString();
         String AñoFin = this.jcbSeleccionAñoFin.getSelectedItem().toString();
+        
         this.jcbSeleccionMesIni.removeAllItems();
         this.jcbSeleccionInicio.removeAllItems();
         Set<String> listaMesesIni = serviciosCuenta.obtieneMeses(AñoIni);
@@ -39,20 +50,20 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         for (String mes : listaMesesFin) {
             this.jcbSeleccionMesFin.addItem(mes);
         }
-        this.jcbSeleccionMesFin.setSelectedIndex(this.jcbSeleccionMesFin.getItemCount() - 1);
         
         String MesIni = this.jcbSeleccionMesIni.getSelectedItem().toString();
         String MesFin = this.jcbSeleccionMesFin.getSelectedItem().toString();
-        
         ArrayList<String> listaDiasIni = serviciosCuenta.obtieneDias(AñoIni, MesIni);
         ArrayList<String> listaDiasFin = serviciosCuenta.obtieneDias(AñoFin, MesFin);
+        
         for (String dia : listaDiasIni) {
             this.jcbSeleccionInicio.addItem(dia);
         }
         for (String dia : listaDiasFin) {
             this.jcbSeleccionFin.addItem(dia);
         }
-        System.out.println("Saliendo: private void actualizarCombos()");
+        this.jcbSeleccionFin.setSelectedIndex(this.jcbSeleccionFin.getItemCount() - 1);
+        //System.out.println("Saliendo: private void actualizarCombos()");
     }
     
     private void borrarCombos(){
@@ -84,14 +95,6 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         this.jbtHistorial.setEnabled(estado);
     }
     
-    public SaldosEmpresaVentana(JFrame owner, boolean modal) {
-        super(owner, modal);
-        this.padre = owner;
-        this.serviciosEmpresa = new EmpresaService();
-        //Hasta el final se hace la llamada al JDialog
-        this.initComponents();
-        this.verComponentes(false);
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -184,12 +187,6 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         jlbSeleccionFin.setText("Fin:");
 
         jlbSeleccionDia.setText("Dia:");
-
-        jcbSeleccionAñoFin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbSeleccionAñoFinActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -351,11 +348,33 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         if(this.jtfEmpresaRFC.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Se necesita proporcionar RFC");
         }else{
+            StringBuilder periodoInicial = new StringBuilder();
+            StringBuilder periodoFinal = new StringBuilder();
+            //Obtenemos periodo Inicial
+            periodoInicial.append(this.jcbSeleccionAñoIni.getSelectedItem().toString());
+            periodoInicial.append(this.jcbSeleccionMesIni.getSelectedItem().toString());
+            periodoInicial.append(this.jcbSeleccionInicio.getSelectedItem().toString());
+            //Obtenemos periodo Final
+            periodoFinal.append(this.jcbSeleccionAñoFin.getSelectedItem().toString());
+            periodoFinal.append(this.jcbSeleccionMesFin.getSelectedItem().toString());
+            periodoFinal.append(this.jcbSeleccionFin.getSelectedItem().toString());
+            //Obtenemos sublista objetivo
+            ArrayList<EstadoCuentaBean> sublista = serviciosCuenta.sublista(periodoInicial.toString(), periodoFinal.toString());
+            //Filtramos solo los estados relevantes
+            ArrayList<EstadoCuentaBean> actividades = serviciosCuenta.actividades(sublista);
+            //Obtenemos array de datos
+            Object[][] datos = serviciosCuenta.obtenerArray(actividades);
+            //Creamos cabecera de Informacion
+            String[] cabecera = {"Periodo","Saldo Inicial","Entradas","Salidas","Saldo Final"};
+            //Creamos JTable
+            JTable tabla = new JTable(datos, cabecera);
+            
+            
             /**
              * Creamos instancia de TablaSaldosVentana 
              * y le enviamos referencia del service que usamos.
              */
-            TablaSaldosVentana tablaVentana = new TablaSaldosVentana(this,true,serviciosCuenta);
+            TablaSaldosVentana tablaVentana = new TablaSaldosVentana(this, true, tabla);
         }
     }//GEN-LAST:event_jbtConsultarEmpresaActionPerformed
 
@@ -363,10 +382,6 @@ public class SaldosEmpresaVentana extends javax.swing.JDialog {
         // TODO Mismo comportamiento que pulsar el boton de consulta
         this.jbtConsultarEmpresaActionPerformed(evt);
     }//GEN-LAST:event_jtfEmpresaRFCActionPerformed
-
-    private void jcbSeleccionAñoFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAñoFinActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbSeleccionAñoFinActionPerformed
 /**/
     /***/
     // Variables declaration - do not modify//GEN-BEGIN:variables

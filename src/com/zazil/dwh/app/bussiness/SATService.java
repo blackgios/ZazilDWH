@@ -9,7 +9,7 @@ import com.zazil.dwh.app.model.SATBean;
 import java.util.ArrayList;
 
 /**
- *
+ *  Esta clase Service consulta 2 tablas: Tabla "SAT" y tabla "almacenSAT"
  * @author Ana Carolina
  */
 public class SATService {
@@ -30,7 +30,7 @@ public class SATService {
         for (SATBean satBean: listaEmpresas){
             if (satBean.getRfcEmpresa().equals(rfcEmpresa)) {
                 declaraEncontrada=satBean;
-                System.out.println("Empresa: " + declaraEncontrada.getRfcEmpresa());
+                //System.out.println("Empresa: " + declaraEncontrada.getRfcEmpresa());
             }
         }
         return declaraEncontrada;

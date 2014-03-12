@@ -10,9 +10,9 @@ public class EstadoCuentaBean extends BaseBean{
     private String cuenta;
     private String periodo;
     private double saldoInicial;
-    private double saldoFinal;
     private double entradas;
     private double salidas;
+    private double saldoFinal;
     /**
      * Constructor de la clase Parametros de entrada:
      * @param rfcEmpresa

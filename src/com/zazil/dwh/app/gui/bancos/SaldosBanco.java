@@ -2,6 +2,7 @@ package com.zazil.dwh.app.gui.bancos;
 
 import java.awt.Frame;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 /**
  *
@@ -9,7 +10,7 @@ import javax.swing.JDialog;
  */
 public class SaldosBanco extends JDialog {
 
-    public SaldosBanco(JDialog owner, boolean modal) {
+    public SaldosBanco(JFrame owner, boolean modal) {
         super(owner, modal);
         this.initComponents();
     }

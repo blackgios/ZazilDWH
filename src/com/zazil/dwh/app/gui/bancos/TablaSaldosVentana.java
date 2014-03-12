@@ -1,24 +1,41 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.zazil.dwh.app.gui.bancos;
-
-import com.zazil.dwh.app.bussiness.EstadoCuentaService;
-import java.awt.Dialog;
-
 /**
  *
  * @author Hector Rodriguez
  */
-public class TablaSaldosVentana extends javax.swing.JDialog {
-    EstadoCuentaService servicioEstadoCuenta;
+package com.zazil.dwh.app.gui.bancos;
 
-    public TablaSaldosVentana(Dialog owner, boolean modal, EstadoCuentaService eC) {
+import java.awt.BorderLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+public class TablaSaldosVentana extends javax.swing.JDialog {
+    private JTable tablaP;
+    private JLabel jlbEmpresa;
+    private JButton jbtGrafico;
+    
+    public TablaSaldosVentana(JFrame owner, boolean modal, JTable tabla) {
         super(owner, modal);
-        this.servicioEstadoCuenta = eC;
-        initComponents();
+        this.tablaP = tabla;
+        this.iniciarComponentes();
+        this.setVisible(true);
     }
+    
+    private void iniciarComponentes(){
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setSize(500, 200);
+        this.getContentPane().setLayout(new BorderLayout());
+        JScrollPane jsp = new JScrollPane(tablaP);
+        this.jlbEmpresa = new JLabel("Estados de cuenta: ");
+        this.jbtGrafico = new JButton("Grafico");
+        //this.getContentPane().getLayout().
+        this.getContentPane().add(jsp, BorderLayout.CENTER);
+        this.getContentPane().add(jlbEmpresa, BorderLayout.NORTH);
+        this.getContentPane().add(jbtGrafico, BorderLayout.SOUTH);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,62 +45,34 @@ public class TablaSaldosVentana extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(148, Short.MAX_VALUE))
+            .addGap(0, 596, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(181, Short.MAX_VALUE))
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.getOwner().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
     
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

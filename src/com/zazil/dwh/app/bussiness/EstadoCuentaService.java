@@ -6,6 +6,7 @@ package com.zazil.dwh.app.bussiness;
 
 import com.zazil.dwh.app.dao.EstadoCuentaDAO;
 import com.zazil.dwh.app.model.EstadoCuentaBean;
+import com.zazil.dwh.app.model.SaldoBean;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
@@ -181,14 +182,70 @@ public class EstadoCuentaService {
         ArrayList<String> listaDias = this.mapaGeneral.get(año).get(mes);
         return listaDias;
     }
+    /**
+     * Recibimos 2 periodos y obtenemos sublista de la lista general
+     * @param pI
+     * @param pF
+     * @return 
+     */
+    public ArrayList<EstadoCuentaBean> sublista(String pI, String pF){
+        //En periodos debemos siempre recibir un entero de 8 digitos
+        int periodoIni = Integer.parseInt(pI);
+        int periodoFin = Integer.parseInt(pF);
+        ArrayList<EstadoCuentaBean> subLista = new ArrayList<>();
+        for (EstadoCuentaBean estadoCuentaBean : this.listaEstadosCuenta) {
+            int periodo = Integer.parseInt(estadoCuentaBean.getPeriodo());
+            //Si el periodo es mayor o igual al periodo inicial o es menor o igual al periodo final entonces lo agregamos a la lista
+            if( (periodo >= periodoIni) | (periodo <= periodoFin) ){
+                subLista.add(estadoCuentaBean);
+            }
+        }
+        return subLista;
+    }
     
     /**
-     * Recibido un periodoInicial y un periodoFinal 
-     * obtenemos un subconjunto de estados de cuenta.
-     * En este subconjunto de estados de cuenta se
-     * analizaran los cambios en los 
+     * Dada una subLista obtenemos lista de los estados de cuenta relevantes
      */
-    
-    
-    
+    public ArrayList<EstadoCuentaBean> actividades(ArrayList<EstadoCuentaBean> estadoC){
+        ArrayList<EstadoCuentaBean> listaCambios = new ArrayList<>();
+        //Se agrega como referencia el primer elemento
+        listaCambios.add(estadoC.get(0));
+        SaldoBean saldoInicial = new SaldoBean(estadoC.get(0));
+        for (EstadoCuentaBean estadoCuentaBean : estadoC) {
+            SaldoBean saldoMonitor = new SaldoBean(estadoCuentaBean);
+            //Agregamos los estados de cuenta mientras estos hayan cambiado
+            if(!( saldoInicial.equals(saldoMonitor) )){
+                listaCambios.add(estadoCuentaBean);
+                saldoInicial = saldoMonitor;
+            }
+        }
+        
+        return listaCambios;
+    }
+    /**
+     * Con el parametro lista obtenemos informacion para llenar 
+     * la tabla de estados de cuenta que se desplegara en ventana
+     * @param lista
+     * @return 
+     */
+    public Object[][] obtenerArray(ArrayList<EstadoCuentaBean> lista){
+        int tamañoLista = lista.size();
+        int numeroDatos = 5;
+        //Tamaño lista = numero de items, 5 = periodo, SdoIni, Entradas, Salidas, SdoFin
+        Object datosTabla[][] = new Object[tamañoLista][numeroDatos];
+        for (int i = 0; i < tamañoLista; i++) {
+            String periodo = lista.get(i).getPeriodo();
+            StringBuilder periodoFormateado = new StringBuilder();
+            periodoFormateado.append(periodo.substring(6)).append("-");
+            periodoFormateado.append(periodo.substring(4, 6)).append("-");
+            periodoFormateado.append(periodo.substring(0, 4));
+            
+            datosTabla[i][0] = periodoFormateado.toString();
+            datosTabla[i][1] = lista.get(i).getSaldoInicial();
+            datosTabla[i][2] = lista.get(i).getEntradas();
+            datosTabla[i][3] = lista.get(i).getSalidas();
+            datosTabla[i][4] = lista.get(i).getSaldoFinal();
+        }
+        return datosTabla;
+    }
 }

@@ -31,6 +31,16 @@ public class EmpresaService {
         
         return listaEmpresas;
     }
+    public String obtenerNombreEmpresa(String rfcEmpresa){
+        String nombreEmpresa = null;
+        ArrayList<EmpresaBean> listaEmpresas = EmpresaService.obtenerEmpresas();
+        for (EmpresaBean empresaBean : listaEmpresas) {
+            if(empresaBean.getRfcEmpresa().equals(rfcEmpresa)){ 
+                nombreEmpresa = empresaBean.getNombreEmpresa();
+            }
+        }
+        return nombreEmpresa;
+    }
 
     public EmpresaBean obtenerEmpresa(String nombreEmpresa){
         EmpresaBean empresaEncontrada = null;
