@@ -10,9 +10,9 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
-public class BotonCAlmacenSAT extends JButton implements TableCellRenderer{
+public class CellRender extends JButton implements TableCellRenderer{
     
-    public BotonCAlmacenSAT() {
+    public CellRender() {
         setOpaque(true);
     }
     

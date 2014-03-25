@@ -13,7 +13,7 @@ public class TestConexion {
         ProcesoServidor servidor = new ProcesoServidor();
         Cliente cliente = new Cliente();
         servidor.start();
-        System.out.println("Hola");
+        //System.out.println("Hola");
         cliente.initClient();
     }
 }

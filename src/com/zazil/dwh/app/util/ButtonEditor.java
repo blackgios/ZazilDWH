@@ -74,20 +74,20 @@ public class ButtonEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue(){
         if(isPushed){
+            String nombreArchivo = null;
             JFileChooser fileC = new JFileChooser();
             fileC.addChoosableFileFilter(new FileFilterPDF());
-            fileC.setFileFilter(fileC.getChoosableFileFilters()[0]);
+            //fileC.setFileFilter(fileC.getChoosableFileFilters()[0]);
             fileC.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             fileC.showOpenDialog(null);
-            String nombreArchivo = null;
+            nombreArchivo = fileC.getSelectedFile().toString(); //Lanza NullPointerExcepcion si se aprieta el boton de cancelar
             if(nombreArchivo != null){
-                JOptionPane.showMessageDialog(null, "mensaje: " + fileC.getSelectedFile().toString());
                 nombreArchivo = fileC.getSelectedFile().toString();
+                JOptionPane.showMessageDialog(null, "Archivo: \n" + nombreArchivo);
+                //this.getTableCellEditorComponent(tablaPrincipal, nombreArchivo, false, clickCountToStart, clickCountToStart);
+                
                 addLista(nombreArchivo);
             }
-//            fileC.getSelectedFile().toString();
-//            fileC.getName(fileC.getSelectedFile());
-//            fileC.getTypeDescription(fileC.getSelectedFile());
         }
         isPushed = false;
         return new String(label);

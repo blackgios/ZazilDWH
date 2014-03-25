@@ -5,7 +5,7 @@
 package com.zazil.dwh.app.gui.sat;
 
 import com.zazil.dwh.app.bussiness.AlmacenSATService;
-import com.zazil.dwh.app.util.BotonCAlmacenSAT;
+import com.zazil.dwh.app.util.CellRender;
 import com.zazil.dwh.app.util.ButtonEditor;
 import com.zazil.dwh.app.util.CellEditor;
 import com.zazil.dwh.app.util.TableModelSAT;
@@ -21,12 +21,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 public class DeclaracionesVentana extends javax.swing.JFrame {
-    private JFrame ventanaPadre;
-    private AlmacenSATService servicioSAT;
-    private JPanel panelTabla;
-    private JLabel jlbEtiqueta;
-    private JTable tablaEmpresas;
-    private JButton jbtCargaArchivos;
+    private JFrame ventanaPadre;            //Ventana padre
+    private AlmacenSATService servicioSAT;  //Servicio consulta BD
+    private JTable jtbEmpresas;             //Tabla de resultados
+    private JButton jbtCargaArchivos;       //Boton general carga de archivos
     /**
      * Creates new form DeclaracionesVentana
      */
@@ -34,7 +32,6 @@ public class DeclaracionesVentana extends javax.swing.JFrame {
         this.ventanaPadre = owner;
         this.setTitle("Empresas");
         this.iniciarComponentes();
-        //initComponents();
     }
     
     private void iniciarComponentes(){
@@ -54,26 +51,27 @@ public class DeclaracionesVentana extends javax.swing.JFrame {
         this.servicioSAT = new AlmacenSATService();
         //Etiqueta
         this.jbtCargaArchivos = new JButton("Carga archivos");
-        //this.jlbEtiqueta.setSize(300, 200);
+        this.jbtCargaArchivos.setBackground(Color.GREEN);
+        this.jbtCargaArchivos.setForeground(Color.BLUE);
         this.getContentPane().add(this.jbtCargaArchivos, BorderLayout.SOUTH);
         
         Object datos[][] = servicioSAT.obtenerArray(servicioSAT.conseguirEmpresas("201311"));//hardcoded
         String cabeceras[] = {"Nombre Empresa", "Periodo", "Estado", "Cargar archivo", "Ruta archivo"};
         
-        this.tablaEmpresas = new JTable(new TableModelSAT(datos, cabeceras));
+        this.jtbEmpresas = new JTable(new TableModelSAT(datos, cabeceras));
         //Controladores de columnas
-        BotonCAlmacenSAT renderizadorColumnas = new BotonCAlmacenSAT();
+        CellRender renderizadorColumnas = new CellRender();
         ButtonEditor editorBotones = new ButtonEditor(new JCheckBox());
         //tablaEmpresas.getColumnName(3);
-        this.tablaEmpresas.getColumn(tablaEmpresas.getColumnName(3)).setCellRenderer(renderizadorColumnas);
-        this.tablaEmpresas.getColumn(tablaEmpresas.getColumnName(3)).setCellEditor(editorBotones);
+        this.jtbEmpresas.getColumn(jtbEmpresas.getColumnName(3)).setCellRenderer(renderizadorColumnas);
+        this.jtbEmpresas.getColumn(jtbEmpresas.getColumnName(3)).setCellEditor(editorBotones);
         //Agregamos otro manejador para modificar la columna de Ruta Archivo
         CellEditor editorCeldas = new CellEditor(new JTextField());
-        this.tablaEmpresas.getColumn(tablaEmpresas.getColumnName(2)).setCellEditor(editorCeldas);
+        this.jtbEmpresas.getColumn(jtbEmpresas.getColumnName(2)).setCellEditor(editorCeldas);
         //this.tablaEmpresas.setForeground(Color.RED);
         
         JScrollPane jsp = new JScrollPane();
-        jsp.setViewportView(this.tablaEmpresas);
+        jsp.setViewportView(this.jtbEmpresas);
         
         this.getContentPane().add(jsp, BorderLayout.CENTER);
         //this.pack();
@@ -111,8 +109,6 @@ public class DeclaracionesVentana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        //System.out.println("Cerrando Ventana");
         this.ventanaPadre.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 

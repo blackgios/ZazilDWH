@@ -5,6 +5,8 @@
 package com.zazil.dwh.app;
 
 import com.zazil.dwh.app.gui.MenuPrincipalVentana;
+import com.zazil.dwh.app.util.Cliente;
+import com.zazil.dwh.app.util.Servidor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -22,7 +24,12 @@ public class DataWareHouse {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(DataWareHouse.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        DataWareHouse App = new DataWareHouse();
+        //Iniciamos el servidor.
+        Servidor server = new Servidor();
+        new Thread(server).run();
+        //Iniciamos el cliente
+        //Cliente cliente = new Cliente();
+        //Iniciamos la aplicacion.
+        //DataWareHouse App = new DataWareHouse();
     }
 }

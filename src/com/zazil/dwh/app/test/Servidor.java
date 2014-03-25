@@ -25,20 +25,20 @@ public class Servidor {
             
             serverSocket = new ServerSocket(PUERTO);
             socket = new Socket();
-            System.out.println("Esperando conexion...");
+            System.out.println("Servidor: Esperando conexion...");
             socket = serverSocket.accept();
-            System.out.println("Cliente conectado");
+            System.out.println("Servidor: Un cliente se ha conectado!");
             entradaDatos = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             streamSalida = new DataOutputStream(socket.getOutputStream());
-            System.out.println("Confirmando conexion con cliente");
-            
-            streamSalida.writeUTF("Conexion exitosa");
-            
-            System.out.println("Antes");
+            System.out.println("Servidor: Confirmando conexion con cliente");
+            streamSalida.writeUTF("Servidor: Conexion exitosa");
+            //System.out.println("Antes");
             mensaje = entradaDatos.readLine();
-            System.out.println("Despues");
-            System.out.println("Mensaje enviado: " + mensaje);
-            //streamSalida.writeUTF("Mensaje recibido");
+            System.out.println("Mensaje: " + mensaje);
+            mensaje = entradaDatos.readLine();
+            //System.out.println("Despues");
+            System.out.println("Mensaje recibido: " + mensaje);
+            streamSalida.writeUTF("Server: Mensaje recibido!!");
             //streamSalida.writeUTF("Terminando conexion");
             System.out.println("Terminando Conexion");
             serverSocket.close();

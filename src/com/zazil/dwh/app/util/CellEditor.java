@@ -1,6 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Hector Rodriguez
+ * Clase Java que formatea una celda de un JTable.
+ * 
+ * 
  */
 package com.zazil.dwh.app.util;
 
@@ -10,10 +12,6 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-/**
- *
- * @author Hector Rodriguez
- */
 public class CellEditor extends DefaultCellEditor{
     private String label;
     private JTextField jtfTexto;
@@ -31,7 +29,4 @@ public class CellEditor extends DefaultCellEditor{
         this.jtfTexto.setText(label);
         return jtfTexto;
     }
-    
-    
-    
 }
