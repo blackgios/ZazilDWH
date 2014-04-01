@@ -29,6 +29,26 @@ public class SaldosEmpresaVentana extends javax.swing.JFrame {
         this.verComponentes(false);
     }
     
+    private void actualizaCombos2(){
+        //Vaciamos combos
+        this.borrarCombos();
+        //Rellenamos combo de años
+        for (String año : serviciosCuenta.obtieneAños()) {
+            this.jcbSeleccionAñoIni.addItem(año);
+        }
+        Object añosSelec = this.jcbSeleccionAñoIni.getSelectedItem();
+        for (String mes : serviciosCuenta.obtieneMeses(añosSelec.toString())) {
+            this.jcbSeleccionMesIni.addItem(mes);
+        }
+        Object mesSelec = this.jcbSeleccionMesFin.getSelectedItem();
+        for (String diaSelec : serviciosCuenta.obtieneDias(añosSelec.toString(), mesSelec.toString())) {
+            this.jcbSeleccionInicio.addItem(diaSelec);
+        }
+        
+        
+        
+    }
+    
     private void actualizarCombos(){
         //System.out.println("Entrando: private void actualizarCombos()");
         Set<String> listaAños = serviciosCuenta.obtieneAños();
@@ -134,7 +154,7 @@ public class SaldosEmpresaVentana extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Empresa", 0, 0, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccione Empresa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), java.awt.Color.blue)); // NOI18N
 
         jLabel1.setText("Empresa:");
 
@@ -325,7 +345,7 @@ public class SaldosEmpresaVentana extends javax.swing.JFrame {
                 //Si los combos tienen elementos los borramos
                 this.borrarCombos();
                 //Se actualizan combos
-                this.actualizarCombos();
+                this.actualizaCombos2();
                 //Con esta bandera ya podemos usar el combo de meses
                 this.estadoActivo = true;
                 //this.actualizarComponentes(serviciosCuenta.getPeriodoMayor(),serviciosCuenta.getPeriodoMenor());

@@ -25,11 +25,11 @@ public class DataWareHouse {
             Logger.getLogger(DataWareHouse.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Iniciamos el servidor.
-        Servidor server = new Servidor();
-        new Thread(server).run();
+        //Servidor server = new Servidor();//192.168.1.180
+        //new Thread(server).run();
         //Iniciamos el cliente
         //Cliente cliente = new Cliente();
         //Iniciamos la aplicacion.
-        //DataWareHouse App = new DataWareHouse();
+        DataWareHouse App = new DataWareHouse();
     }
 }
